@@ -13,10 +13,10 @@ int main(){
             std::cout << "Input not within range of 1 to 10, try again";
         }
         else {
-            count[input]++;
+            count[input-1]++;
         }
     }
     for(int i = 0; i < 10; i++){
-        std::cout << "Number " << i << " occured " << count[i] << " times" << std::endl;
+        std::cout << "Number " << i+1 << " occured " << count[i] << " times" << std::endl;
     }
 }

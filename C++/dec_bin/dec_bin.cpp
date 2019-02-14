@@ -11,17 +11,17 @@ int main(){
         sub = sub/2;
         n++;
     }
-    std::cout << n << std::endl;
-    char bin[n+1] = "";
-    for(int i = 0; i < n; i++){
-        if(dec%2 == 1){
+    char bin[n];
+    for (int i = 0; i < n; ++i) {
+        if (dec%2 == 1) {
             bin[n-i-1] = '1';
         }
-        else{
+        else {
             bin[n-i-1] = '0';
         }
         dec = dec/2;
     }
-    std::cout << bin << std::flush;
-    std::cout << std::endl;
+    for (int i = 0; i < n; ++i) {
+        std::cout << bin[i] << "  ";
+    }
 }
