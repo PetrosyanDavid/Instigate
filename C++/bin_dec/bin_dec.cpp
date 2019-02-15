@@ -1,4 +1,3 @@
-//#include "get_num.h"
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
@@ -16,7 +15,8 @@ int main()
         len = bin_num.length();
         for (int i = 0; i < len; ++i) {
             if (bin_num[i] != '0' && bin_num[i] != '1') {
-                std::cout << "Your input is not a binary number, please try again" << std::endl;
+                std::cout << "Your input is not a binary number,"
+                    << " please try again" << std::endl;
                 break;
             } else {
                 dig = bin_num[i] - '0';

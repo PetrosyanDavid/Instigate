@@ -2,27 +2,27 @@
 #include <cstdlib>
 #include <ctime>
 
-int main(){
+int main()
+{
     srand(time(NULL));
-    int num = rand()%100 + 1; 
+    int num = rand()%100 + 1;
     int count = 0;
     int guess = 0;
-    while(true){
+    while(true) {
+        std::cout << "Please input your guess" << std::endl;
         guess = get_int();
-        if (guess < 1 || guess > 100){
-            std::cout << "Input is not wuthin acceptabl range, try again" <<  std::endl;
+        if (guess < 1 || guess > 100) {
+            std::cout << "Input is not within"
+                      <<" acceptabl range, try again" <<  std::endl;
             continue;
-        }
-        else{
+        } else {
             count++;
-            if(guess == num){
+            if (guess == num) {
                 std::cout << "Correct guess" << std::endl;
                 break;
-            }
-            else if(guess < num){
+            } else if (guess < num) {
                 std::cout << "Too low" << std::endl;
-            }
-            else{
+            } else {
                 std::cout << "Too high" << std::endl;
             }
         }
