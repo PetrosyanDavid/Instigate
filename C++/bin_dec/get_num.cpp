@@ -1,5 +1,5 @@
-#include <iostream>
 #include <sstream>
+#include "get_num.h"
 
 int get_int(){
     bool fl=false;
@@ -79,15 +79,3 @@ float get_float(){
     return result;
 }
 
-int main(){
-    int x = 0;
-    float y = 0;
-
-    x = get_int();
-    std::cout <<  "Integer number is: " << x << std::endl;
-
-//    y = get_float();
- //   std::cout <<  "Float number is: " << y << std::endl;
-//    std::cout << y/3 << std::endl;
-
-}
