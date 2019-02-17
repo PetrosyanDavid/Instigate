@@ -1,2 +1,2 @@
 # Instigate
-Repository fo Instigate projects
+Repository for Instigate projects
