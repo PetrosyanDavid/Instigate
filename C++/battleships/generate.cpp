@@ -1,22 +1,23 @@
-#include <iostream>
+#include "generate.h"
 #include <string>
 #include <ctime>
 #include <cstdlib>
 #include <cstring>
-bool check(char a[], int i, int j, int k, int c)
+
+bool check(char a[],const int& row,const int& col, const int& ship_len, const int& c)
 {
     int count = 0;
     if (1 == c){
-        for (int s = i-1; s <= i+1; ++s) {
-            for (int f = j-1; f <= j+k; ++f){
+        for (int s = row-1; s <= row+1; ++s) {
+            for (int f = col-1; f <= col+ship_len; ++f){
                 if (a[12*s + f] == '#'){
                     count++;
                 }
             }
         }
     } else if (2 == c) {
-        for (int s = i-1; s <= i+k; ++s) {
-            for (int f = j-1; f <= j+1; ++f){
+        for (int s = row-1; s <= row+ship_len; ++s) {
+            for (int f = col-1; f <= col+1; ++f){
                 if (a[12*s + f] == '#'){
                     count++;
                 }
@@ -33,55 +34,59 @@ bool check(char a[], int i, int j, int k, int c)
 
 
 
-void show(char a[]){
-    for (int i = 1; i < 11; ++i) {
-        for (int j = 1; j < 11; ++j){
-            std::cout << a[12 * i + j] << std::flush;
+void show(const char a[])
+{
+    for (int row = 1; row < 11; ++row) {
+        for (int col = 1; col < 11; ++col){
+            std::cout << a[12 * row + col] << std::flush;
         }
         std::cout << std::endl;
     }
 }
-
-char* generate(){
+/*
+char* place_ship(char a[], i, j, len, ship)
+{
+    
+}
+*/
+char* generate()
+{
     srand(time(NULL));
-    bool cond  = true;
-    int d = 0;
-    int i = 0;
-    int j = 0;
-    int c = 0;
-    char* field = new char[144];
+    int row = 0;                 // row number
+    int col = 0;                 // column number
+    int dir = 0;                 // direction in which the ship will\
+                                    be placed (1 horisontal, 2 vertical)
+    char* field = new char[144]; // 12x12 array for ease of check
     memset (field, '-', 144);
-   // show1(field);
-    for (int k = 4; k > 0; --k) {
-        d = 1;
-        while (k + d <= 5){
-            do {
-                cond = true;
+    for (int ship_len = 1; ship_len <= 4; ++ship_len) {
+        for (int i = 0; i < 5 - ship_len; ++i) {
                 if ((float)rand()/RAND_MAX <= 0.5) {
-                    i = rand()%10 + 1;
-                    j = rand()%(11 - k) + 1;
-                    c = 1;
-                    if (check (field, i, j, k, c)) {
-                        for (int u = 0; u < k; ++u) {
-                            field [12 * i + j] = '#';
-                            j++;
+                    do {
+                        row = rand()%10 + 1;
+                        col = rand()%(11 - ship_len) + 1;
+                        dir = 1;
+                        if (check(field, row, col, ship_len, dir)) {
+                            for (int u = 0; u < ship_len; ++u) {
+                                field [12 * row + col] = '#';
+                                col++;
+                            }
+                            break;
                         }
-                        cond = false;
-                    }
+                    } while(true);
                 } else {
-                    i = rand()%(11 - k) + 1;
-                    j = rand()%10 + 1;
-                    c = 2;
-                    if (check(field, i, j, k, c)) {
-                        for (int u = 0; u < k; ++u) {
-                            field [12 * i + j] = '#';
-                            i++;
+                    do {
+                        row = rand()%(11 - ship_len) + 1;
+                        col = rand()%10 + 1;
+                        dir = 2;
+                        if (check(field, row, col, ship_len, dir)) {
+                            for (int u = 0; u < ship_len; ++u) {
+                                field [12 * row + col] = '#';
+                                row++;
+                            }
+                            break;
                         }
-                        cond = false;
-                    }
+                    } while(true);
                 }
-            } while (cond);
-            d++;
         }
     }
     return field;
@@ -89,14 +94,8 @@ char* generate(){
 
 
 
-void destroy(char a[]){
+void destroy(char a[])
+{
     delete [] a;
 }
 
-
-int main()
-{
-    char* p = generate();
-    show(p);
-    destroy(p);
-}
