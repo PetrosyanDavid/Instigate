@@ -104,3 +104,94 @@ void destroy_empty(char** a)
     }
     delete a;
 }
+
+bool check_dead(char** a,const int& row,const int& col)
+{
+    if (check_right(a, row, col)){
+        if (check_left(a, row, col)) {
+            if (check_down(a, row, col)) {
+                if (check_up(a, row, col)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+bool check_right (char** a,const int& row,const int& col)
+{
+    int c = col;
+    while(a[row][c] = '$') {
+        if (c < 9){
+            c++;
+            if (a[row][c] == '-' || a[row][c] == '*') {
+                return true;
+            } else if (a[row][c] == '#') {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+}
+
+bool check_left (char** a,const int& row,const int& col)
+{
+    int c = col;
+    while(a[row][c] = '$') {
+        if (c > 0){
+                c--;
+                if (a[row][c] == '-' || a[row][c] == '*') {
+                    return true;
+                } else if (a[row][c] == '#') {
+                    return false;
+                }
+        } else {
+            return true;
+        }
+    }
+}
+
+
+bool check_down (char** a,const int& row,const int& col)
+{
+    int o = row;
+    while(a[o][col] = '$') {
+        if (o > 0) {
+                o--;
+                if (a[o][col] == '-' || a[o][col] == '*') {
+                    return true;
+                } else if (a[o][col] == '#') {
+                    return false;
+                }
+        } else {
+            return true;
+        }
+    }
+}
+
+
+bool check_up (char** a,const int& row,const int& col)
+{
+    int o = row;
+    while(a[o][col] = '$') {
+        if (o < 9) {
+                o++;
+                if (a[o][col] == '-' || a[o][col] == '*') {
+                    return true;
+                } else if (a[o][col] == '#') {
+                    return false;
+                }
+        } else {
+            return true;
+        }
+    }
+}
