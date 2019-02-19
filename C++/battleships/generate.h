@@ -10,3 +10,5 @@ bool check(char* , const int&, const int&, const int&, const int&);
 void show(const char*);
 char* generate();
 void destroy(char*);
+char ** generate_empty();
+void destroy_empty(char **);

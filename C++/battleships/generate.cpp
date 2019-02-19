@@ -1,9 +1,9 @@
 #include "generate.h"
 
-bool check (char* a,const int& row,const int& col, const int& ship_len, const int& c)
+bool check (char* a,const int& row,const int& col, const int& ship_len, const int& dir)
 {
     int count = 0;
-    if (0 == c){
+    if (0 == dir){
         for (int s = row-1; s <= row+1; ++s) {
             for (int f = col-1; f <= col+ship_len; ++f){
                 if (a[12*s + f] == '#'){
@@ -11,7 +11,7 @@ bool check (char* a,const int& row,const int& col, const int& ship_len, const in
                 }
             }
         }
-    } else if (1 == c) {
+    } else if (1 == dir) {
         for (int s = row-1; s <= row+ship_len; ++s) {
             for (int f = col-1; f <= col+1; ++f){
                 if (a[12*s + f] == '#'){
@@ -38,7 +38,7 @@ void show (const char* a)
 }
 
 
-void  place_ship (char* field ,const int& ship_len,const int& dir)
+void  place_ship (char* field ,const int& ship_len, const int& dir)
 {
     int row = 0;
     int col = 0;
@@ -86,3 +86,21 @@ void destroy (char* a)
     delete [] a;
 }
 
+
+char** generate_empty()
+{
+    char** my_board = new char*[10];
+    for (int i = 0; i < 10; ++i) {
+        my_board[i] = new char[10];
+    }
+    return my_board;
+}
+
+
+void destroy_empty(char** a)
+{
+    for (int i = 0; i < 10; ++i){
+        delete [] a[i];
+    }
+    delete a;
+}
