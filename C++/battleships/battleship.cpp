@@ -8,13 +8,6 @@ int main()
     char** p = generate();
     char** copy_board = generate_empty();
     char** my_board = generate_empty();
-    for (int i = 0; i < 10; ++i) {
-        for(int j = 0; j < 10; ++j){
-            copy_board[i][j] = p[i][j];
-            std::cout << copy_board[i][j] << std::flush;
-        }
-        std::cout<<std::endl;
-    }
     while (true){
         std::cin >> row;
         std::cin >> col;
@@ -25,14 +18,12 @@ int main()
             std::cout << "Quitting" << std::endl;
             break;
         }
-        if (copy_board[row][col] == '-' || copy_board[row][col] == '*') {
+        if (p[row][col] == '-' || p[row][col] == '*') {
             std::cout << "Miss" << std::endl;
-            copy_board[row][col] = '*';
             my_board[row][col] = '*';
-        } else if (copy_board[row][col]=='#') {
-            copy_board[row][col] = '$';
+        } else if (p[row][col]=='#') {
             my_board[row][col] = '$';
-            if(check_dead(copy_board ,copy_board , row, col)){
+            if(check_dead(my_board ,p , row, col)){
 //            if (false) {
             std::cout << "A ship died" << std::endl;
             } else {
@@ -40,12 +31,7 @@ int main()
             }
             count ++;
         }
-        for (int i = 0; i < 10; ++i) {
-            for(int j = 0; j < 10; ++j) {
-                std::cout << copy_board[i][j] << std::flush; 
-            }
-            std::cout<<std::endl;
-        }
+        show (my_board);
         if (count == 20){
             std::cout << "Game won" << std::endl;
             break;

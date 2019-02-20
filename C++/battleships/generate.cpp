@@ -150,10 +150,14 @@ bool check_right (char** my_a, char** a,const int& row, int col)
     while(my_a[row][col] = '$') {
         if (col < 9){
             col++;
-            if (a[row][col] == '-' || a[row][col] == '*') {
+            if (my_a[row][col] == '-'){
+                if (a[row][col] == '-') {
+                    return true;
+                } else if (a[row][col] == '#') {
+                    return false;
+                }
+            } else if (my_a [row][col] == '*') {
                 return true;
-            } else if (a[row][col] == '#') {
-                return false;
             }
         } else {
             return true;
@@ -166,10 +170,14 @@ bool check_left (char** my_a, char** a,const int& row, int col)
     while(my_a[row][col] = '$') {
         if (col > 0){
             col--;
-            if (a[row][col] == '-' || a[row][col] == '*') {
+            if (my_a[row][col] == '-'){
+                if (a[row][col] == '-') {
+                    return true;
+                } else if (a[row][col] == '#') {
+                    return false;
+                }
+            } else if (my_a [row][col] == '*') {
                 return true;
-            } else if (a[row][col] == '#') {
-                return false;
             }
         } else {
             return true;
@@ -183,10 +191,14 @@ bool check_down (char** my_a, char** a, int row,const int& col)
     while(my_a[row][col] = '$') {
         if (row > 0) {
             row--;
-            if (a[row][col] == '-' || a[row][col] == '*') {
+            if (my_a[row][col] == '-'){
+                if (a[row][col] == '-') {
+                    return true;
+                } else if (a[row][col] == '#') {
+                    return false;
+                }
+            } else if (my_a [row][col] == '*') {
                 return true;
-            } else if (a[row][col] == '#') {
-                return false;
             }
         } else {
             return true;
@@ -200,10 +212,14 @@ bool check_up (char** my_a,char** a, int row,const int& col)
     while(my_a[row][col] = '$') {
         if (row < 9) {
             row++;
-            if (a[row][col] == '-' || a[row][col] == '*') {
+            if (my_a[row][col] == '-'){
+                if (a[row][col] == '-') {
+                    return true;
+                } else if (a[row][col] == '#') {
+                    return false;
+                }
+            } else if (my_a [row][col] == '*') {
                 return true;
-            } else if (a[row][col] == '#') {
-                return false;
             }
         } else {
             return true;
