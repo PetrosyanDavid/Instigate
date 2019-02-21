@@ -6,26 +6,24 @@ int main()
     int col = 0;
     int count = 0;
     char** p = generate();
-    char** copy_board = generate_empty();
     char** my_board = generate_empty();
+    std::cout << "Welcome to the game of battleship" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Your goal is to guess the positions of enemy ships" << std::endl;
+    std::cout << "Your input should have format of letter in range 'a -j' " 
+              << "followed by number in range 1-10." << std::endl;
+    std::cout << "You can olso input '-1' to see the enemy board" << std::endl;
+    std::cout << std::endl;
     while (true){
-        std::cin >> row;
-        std::cin >> col;
-        if (row == -1) {
-            show(p);
-            continue;
-        } else if (row == -2) {
-            std::cout << "Quitting" << std::endl;
-            break;
-        }
+        take_input(p, row, col);
         if (p[row][col] == '-' || p[row][col] == '*') {
             std::cout << "Miss" << std::endl;
             my_board[row][col] = '*';
         } else if (p[row][col]=='#') {
             my_board[row][col] = '$';
             if(check_dead(my_board ,p , row, col)){
-//            if (false) {
-            std::cout << "A ship died" << std::endl;
+                std::cout << "A ship died" << std::endl;
+                fill(my_board, row, col);
             } else {
                 std::cout << "Injured" << std::endl;
             }
@@ -38,6 +36,5 @@ int main()
         }
     }
     destroy(my_board);
-    destroy(copy_board);
     destroy(p);
 }
