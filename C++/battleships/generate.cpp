@@ -8,7 +8,12 @@ void take_input (char** ar, int& a, int& b)
         getline(std::cin, s);
         if (s == "-1") {
             show (ar);
-        }else if (s.length() < 2 || s.length() > 3) {
+            continue;
+        } else if ("-2" == s){
+            a = -1;
+            b = -1;
+            break;
+        } else if (s.length() < 2 || s.length() > 3) {
             std::cout << "Wrong input, please try again" << std::endl;
             continue;
         } else if (3 == s.length()) {
@@ -21,7 +26,7 @@ void take_input (char** ar, int& a, int& b)
                 break;
             }
         } else {
-            if ((int)s[0] < 97 || (int)s[0] > 106 || (int)s[1] < 48 || (int)s[1] > 57) {
+            if ((int)s[0] < 97 || (int)s[0] > 106 || (int)s[1] < 49 || (int)s[1] > 57) {
                 std::cout << "Wrong input, please try again " << std::endl;
                 continue;
             } else {
@@ -73,13 +78,13 @@ void show (char** a)
     std::cout << std::endl;
     std::cout << "  " << std::flush;
     for (int i = 1; i < 11; ++i) {
-        std::cout << i << std::flush;
+        std::cout << i << " " << std::flush;
     }
     std::cout << std::endl;
     for (int row = 0; row < 10; ++row) {
         std::cout << char(97 + row) << " " << std::flush;
         for (int col = 0; col < 10; ++col){
-            std::cout <<a[row][col] << std::flush;
+            std::cout <<a[row][col] << " " << std::flush;
         }
         std::cout << std::endl;
     }
