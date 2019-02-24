@@ -1,6 +1,56 @@
 #include "generate.h"
 
 
+void greet()
+{
+    std::cout << std::endl;
+    std::cout << "\t\tWelcome to the game of battleship" << std::endl;
+    std::cout << std::endl;
+    std::cout << "Your goal is to guess the positions of enemy ships" << std::endl;
+    std::cout << "Your input should have format of letter in range 'a-j' "
+        << "followed by number in range 1-10." << std::endl;
+    std::cout << "You can olso input '-1' to see the enemy board, "
+        << "or '-2 to quit the game'" << std::endl;
+    std::cout << std::endl;
+}
+
+void run (char** p, char** my_board)
+{
+    int row = 0;
+    int col = 0;
+    int count = 0;
+    while (true) {
+        take_input(p, row, col);
+        if (-1 == row || -1 == col) {
+            std::cout << "Quitting" << std::endl;
+            break;;
+        } else {
+            if ('$' == my_board[row][col]) {
+                std::cout << "Repeating hit" << std::endl;
+            } else if ('*' == my_board[row][col]) {
+                std::cout << "Repeating miss" << std::endl;
+            } else if (p[row][col] == '-' || p[row][col] == '*') {
+                std::cout << "Miss" << std::endl;
+                my_board[row][col] = '*';
+            } else if (p[row][col]=='#') {
+                my_board[row][col] = '$';
+                if(check_dead(my_board ,p , row, col)) {
+                    std::cout << "A ship died" << std::endl;
+                    fill(my_board, row, col);
+                } else {
+                    std::cout << "Injured" << std::endl;
+                }
+                count ++;
+            }
+        }
+        show (my_board);
+        if (count == 20) {
+            std::cout << "Game won" << std::endl;
+            break;
+        }
+    }
+}
+
 void take_input (char** ar, int& a, int& b)
 {
     std::string s = "";
@@ -38,16 +88,16 @@ void take_input (char** ar, int& a, int& b)
     }
 }
 
-bool check (char** a,const int& row,const int& col, const int& ship_len, const int& dir)
+bool check (char** a, const int& row, const int& col, const int& ship_len, const int& dir)
 {
     int count = 0;
-    if (0 == dir){
+    if (0 == dir) {
         for (int s = row-1; s <= row+1; ++s) {
-            for (int f = col-1; f <= col+ship_len; ++f){
+            for (int f = col-1; f <= col+ship_len; ++f) {
                 if (s < 0 || s > 9 || f < 0 || f > 9) {
                     continue;
                 } else {
-                    if (a[s][f] == '#'){
+                    if (a[s][f] == '#') {
                         count++;
                     }
                 }
@@ -55,18 +105,18 @@ bool check (char** a,const int& row,const int& col, const int& ship_len, const i
         }
     } else if (1 == dir) {
         for (int s = row-1; s <= row+ship_len; ++s) {
-            for (int f = col-1; f <= col+1; ++f){
+            for (int f = col-1; f <= col+1; ++f) {
                 if (s < 0 || s > 9 || f < 0 || f > 9) {
                     continue;
                 } else {
-                    if (a[s][f] == '#'){
+                    if (a[s][f] == '#') {
                         count++;
                     }
                 }
             }
         }
     }
-    if (count == 0){
+    if (count == 0) {
         return true;
     } else {
         return false;
@@ -83,7 +133,7 @@ void show (char** a)
     std::cout << std::endl;
     for (int row = 0; row < 10; ++row) {
         std::cout << char(97 + row) << " " << std::flush;
-        for (int col = 0; col < 10; ++col){
+        for (int col = 0; col < 10; ++col) {
             std::cout <<a[row][col] << " " << std::flush;
         }
         std::cout << std::endl;
@@ -92,7 +142,7 @@ void show (char** a)
 }
 
 
-bool  place_ship (char** field ,const int& ship_len, const int& dir)
+bool  place_ship (char** field, const int& ship_len, const int& dir)
 {
     srand(time(NULL));
     int row = 0;
@@ -128,13 +178,13 @@ bool  place_ship (char** field ,const int& ship_len, const int& dir)
     return true;
 }
 
-char** generate()
+char** generate ()
 {
     srand(time(NULL));
     int dir = 0;
     bool cond = true;
     char** field = new char*[12];
-    for (int i = 0; i < 10; ++i){
+    for (int i = 0; i < 10; ++i) {
         field[i] = new char[10];
     }
     while (cond) {
@@ -164,7 +214,7 @@ char** generate()
 
 void destroy (char** a)
 {
-    for (int i =0; i < 10; ++i){
+    for (int i =0; i < 10; ++i) {
         delete [] a[i];
     }
     delete [] a;
@@ -177,7 +227,6 @@ char** generate_empty()
     for (int i = 0; i < 10; ++i) {
         my_board[i] = new char[10];
     }
-//    memset (my_board, '-', 10*10*sizeof my_board[0][0]);
     for (int i = 0; i < 10; ++i) {
         for (int j = 0; j < 10; ++j) {
             my_board[i][j] = '-';
@@ -188,9 +237,9 @@ char** generate_empty()
 
 
 
-bool check_dead(char** my_a, char** a,const int& row,const int& col)
+bool check_dead (char** my_a, char** a, const int& row, const int& col)
 {
-    if (check_right(my_a, a, row, col)){
+    if (check_right(my_a, a, row, col)) {
         if (check_left(my_a, a, row, col)) {
             if (check_down(my_a, a, row, col)) {
                 if (check_up(my_a, a, row, col)) {
@@ -209,12 +258,12 @@ bool check_dead(char** my_a, char** a,const int& row,const int& col)
     }
 }
 
-bool check_right (char** my_a, char** a,const int& row, int col)
+bool check_right (char** my_a, char** a, const int& row, int col)
 {
     while(my_a[row][col] = '$') {
-        if (col < 9){
+        if (col < 9) {
             col++;
-            if (my_a[row][col] == '-'){
+            if (my_a[row][col] == '-') {
                 if (a[row][col] == '-') {
                     return true;
                 } else if (a[row][col] == '#') {
@@ -229,12 +278,12 @@ bool check_right (char** my_a, char** a,const int& row, int col)
     }
 }
 
-bool check_left (char** my_a, char** a,const int& row, int col)
+bool check_left (char** my_a, char** a, const int& row, int col)
 {
     while(my_a[row][col] = '$') {
-        if (col > 0){
+        if (col > 0) {
             col--;
-            if (my_a[row][col] == '-'){
+            if (my_a[row][col] == '-') {
                 if (a[row][col] == '-') {
                     return true;
                 } else if (a[row][col] == '#') {
@@ -250,12 +299,12 @@ bool check_left (char** my_a, char** a,const int& row, int col)
 }
 
 
-bool check_down (char** my_a, char** a, int row,const int& col)
+bool check_down (char** my_a, char** a, int row, const int& col)
 {
     while(my_a[row][col] = '$') {
         if (row > 0) {
             row--;
-            if (my_a[row][col] == '-'){
+            if (my_a[row][col] == '-') {
                 if (a[row][col] == '-') {
                     return true;
                 } else if (a[row][col] == '#') {
@@ -271,12 +320,12 @@ bool check_down (char** my_a, char** a, int row,const int& col)
 }
 
 
-bool check_up (char** my_a,char** a, int row,const int& col)
+bool check_up (char** my_a, char** a, int row, const int& col)
 {
     while(my_a[row][col] = '$') {
         if (row < 9) {
             row++;
-            if (my_a[row][col] == '-'){
+            if (my_a[row][col] == '-') {
                 if (a[row][col] == '-') {
                     return true;
                 } else if (a[row][col] == '#') {
@@ -301,11 +350,11 @@ void fill (char** my_board, const int& row, const int& col)
 }
 
 
-void fill_right(char ** my_board, const int& row, int col)
+void fill_right (char ** my_board, const int& row, int col)
 {
     while ('$' == my_board[row][col]) {
         for (int i = row - 1; i <= row + 1; ++i) {
-            for (int j = col - 1; j <= col + 1; ++j){
+            for (int j = col - 1; j <= col + 1; ++j) {
                 if (i < 0 || i > 9 || j < 0 || j > 9) {
                     continue;
                 } else {
@@ -317,19 +366,19 @@ void fill_right(char ** my_board, const int& row, int col)
                 }
             }
         }
-        if (9 != col){
+        if (9 != col) {
             col++;
-        } else  {
+        } else {
             break;
         }
     }
 }
 
-void fill_left(char ** my_board,const int& row, int col)
+void fill_left (char ** my_board, const int& row, int col)
 {
     while ('$' == my_board[row][col]) {
         for (int i = row - 1; i <= row + 1; ++i) {
-            for (int j = col - 1; j <= col + 1; ++j){
+            for (int j = col - 1; j <= col + 1; ++j) {
                 if (i < 0 || i > 9 || j < 0 || j > 9) {
                     continue;
                 } else {
@@ -343,17 +392,17 @@ void fill_left(char ** my_board,const int& row, int col)
         }
         if (0 != col){
             col--;
-        } else  {
+        } else {
             break;
         }
     }
 }
 
-void fill_up(char ** my_board, int row, const int& col)
+void fill_up (char ** my_board, int row, const int& col)
 {
     while ('$' == my_board[row][col]) {
         for (int i = row - 1; i <= row + 1; ++i) {
-            for (int j = col - 1; j <= col + 1; ++j){
+            for (int j = col - 1; j <= col + 1; ++j) {
                 if (i < 0 || i > 9 || j < 0 || j > 9) {
                     continue;
                 } else {
@@ -365,19 +414,19 @@ void fill_up(char ** my_board, int row, const int& col)
                 }
             }
         }
-        if (0 != row){
+        if (0 != row) {
             row--;
-        } else  {
+        } else {
             break;
         }
     }
 }
 
-void fill_down(char ** my_board, int row, const int& col)
+void fill_down (char ** my_board, int row, const int& col)
 {
     while ('$' == my_board[row][col]) {
         for (int i = row - 1; i <= row + 1; ++i) {
-            for (int j = col - 1; j <= col + 1; ++j){
+            for (int j = col - 1; j <= col + 1; ++j) {
                 if (i < 0 || i > 9 || j < 0 || j > 9) {
                     continue;
                 } else {
@@ -389,9 +438,9 @@ void fill_down(char ** my_board, int row, const int& col)
                 }
             }
         }
-        if (9 != row){
+        if (9 != row) {
             row++;
-        } else  {
+        } else {
             break;
         }
     }
