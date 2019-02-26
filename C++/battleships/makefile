@@ -8,9 +8,9 @@ OBJECTS := $(patsubst src/%.cpp, obj/%.o, $(SOURCES))
 INC := -I./inc
 DEPENDS := $(patsubst src/%.cpp,obj/%.dep,$(SOURCES))
 
-default:
-	@echo $(SOURCES)
-	@echo $(OBJ)
+#default: \
+	@echo $(SOURCES)\
+	@echo $(OBJ) \
 	@echo $(OBJECTS)
 
 
@@ -24,10 +24,10 @@ battleship : ./bin $(OBJECTS)
 	mkdir -p obj
 
 clean: 
-	rm -rf ./obj/*.o ./bin/*
+	rm -rf ./obj/*  ./bin/*
 
-obj/%.dep : src/%.cpp $(OBJECTS)
-	g++ -MM $< -MT “$@ $(patsubst %.dep,%.o,$@)” -o $@
+obj/%.dep : src/%.cpp 
+	g++ $(INC) -MM $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
 
 obj/%.o : src/%.cpp ./obj 
 	$(CC) -c -I./inc $< -o $@ 

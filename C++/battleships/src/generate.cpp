@@ -1,6 +1,6 @@
 #include "generate.h"
 
-
+// Greeting message
 void greet()
 {
     std::cout << std::endl;
@@ -14,6 +14,7 @@ void greet()
     std::cout << std::endl;
 }
 
+// Run function for taking input from user and displaying the result
 void run (char** p, char** my_board)
 {
     int row = 0;
@@ -51,6 +52,7 @@ void run (char** p, char** my_board)
     }
 }
 
+// function for taking input, parsing it and returning the coordinates on 10x10 field
 void take_input (char** ar, int& a, int& b)
 {
     std::string s = "";
@@ -88,6 +90,8 @@ void take_input (char** ar, int& a, int& b)
     }
 }
 
+// function  checking if ship of length ship_len can be placed starting at
+// coordinates  row, col horizontally (dir = 0) or vertically (dir = 1)
 bool check (char** a, const int& row, const int& col, const int& ship_len, const int& dir)
 {
     int count = 0;
@@ -123,6 +127,7 @@ bool check (char** a, const int& row, const int& col, const int& ship_len, const
     }
 }
 
+// function for showing 10x10 field
 void show (char** a)
 {
     std::cout << std::endl;
@@ -141,7 +146,7 @@ void show (char** a)
     std::cout << std::endl;
 }
 
-
+// function for placing a single ship of length ship_len on field
 bool  place_ship (char** field, const int& ship_len, const int& dir)
 {
     srand(time(NULL));
@@ -177,7 +182,7 @@ bool  place_ship (char** field, const int& ship_len, const int& dir)
     } while (true);
     return true;
 }
-
+// function for generating 10x10 field with randomly placed ships as 2d array
 char** generate ()
 {
     srand(time(NULL));
@@ -211,7 +216,7 @@ char** generate ()
 }
 
 
-
+// deleting dynamically defined 2d array
 void destroy (char** a)
 {
     for (int i =0; i < 10; ++i) {
@@ -220,7 +225,7 @@ void destroy (char** a)
     delete [] a;
 }
 
-
+// generating empty 10x10 field as 2d array
 char** generate_empty()
 {
     char** my_board = new char*[10];
@@ -236,7 +241,7 @@ char** generate_empty()
 }
 
 
-
+// checking if injury resulted in the death of the ship
 bool check_dead (char** my_a, char** a, const int& row, const int& col)
 {
     if (check_right(my_a, a, row, col)) {
@@ -257,6 +262,7 @@ bool check_dead (char** my_a, char** a, const int& row, const int& col)
         return false;
     }
 }
+
 
 bool check_right (char** my_a, char** a, const int& row, int col)
 {
@@ -340,7 +346,7 @@ bool check_up (char** my_a, char** a, int row, const int& col)
     }
 }
 
-
+// filling the spaces around dead ship
 void fill (char** my_board, const int& row, const int& col)
 {
     fill_right(my_board, row, col);
