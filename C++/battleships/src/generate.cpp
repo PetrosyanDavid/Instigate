@@ -149,7 +149,6 @@ void show (char** a)
 // function for placing a single ship of length ship_len on field
 bool  place_ship (char** field, const int& ship_len, const int& dir)
 {
-    srand(time(NULL));
     int row = 0;
     int col = 0;
     int attempts = 0;
@@ -185,20 +184,12 @@ bool  place_ship (char** field, const int& ship_len, const int& dir)
 // function for generating 10x10 field with randomly placed ships as 2d array
 char** generate ()
 {
-    srand(time(NULL));
     int dir = 0;
     bool cond = true;
-    char** field = new char*[12];
-    for (int i = 0; i < 10; ++i) {
-        field[i] = new char[10];
-    }
+    char** field;
     while (cond) {
         cond = false;
-        for (int i = 0; i < 10; ++i) {
-            for (int j = 0; j < 10; ++j) {
-                field[i][j] = '-';
-            }
-        }
+        field = generate_empty();
         for (int ship_len = 1; ship_len <= 4; ++ship_len) {
             for (int i = 0; i < 5 - ship_len; ++i) {
                 dir = (rand())%2;
@@ -228,26 +219,35 @@ void destroy (char** a)
 // generating empty 10x10 field as 2d array
 char** generate_empty()
 {
-    char** my_board = new char*[10];
-    for (int i = 0; i < 10; ++i) {
-        my_board[i] = new char[10];
-    }
-    for (int i = 0; i < 10; ++i) {
-        for (int j = 0; j < 10; ++j) {
-            my_board[i][j] = '-';
+    while (true) {
+        try {
+            char** my_board = new char*[10];
+            for (int i = 0; i < 10; ++i) {
+                my_board[i] = new char[10];
+            }
+            for (int i = 0; i < 10; ++i) {
+                for (int j = 0; j < 10; ++j) {
+                    my_board[i][j] = '-';
+                }
+            }
+            return my_board;
+            break;
+        }
+        catch (std::bad_alloc& ba) {
+            std::cout << "Memory allocation failed" << std::endl;
+            continue;
         }
     }
-    return my_board;
 }
 
 
 // checking if injury resulted in the death of the ship
 bool check_dead (char** my_a, char** a, const int& row, const int& col)
 {
-    if (check_right(my_a, a, row, col)) {
-        if (check_left(my_a, a, row, col)) {
-            if (check_down(my_a, a, row, col)) {
-                if (check_up(my_a, a, row, col)) {
+    if (check_dir(my_a, a, row, col, 1)) {
+        if (check_dir(my_a, a, row, col, 2)) {
+            if (check_dir(my_a, a, row, col, 3)) {
+                if (check_dir(my_a, a, row, col, 4)) {
                     return true;
                 } else {
                     return false;
@@ -263,84 +263,46 @@ bool check_dead (char** my_a, char** a, const int& row, const int& col)
     }
 }
 
-
-bool check_right (char** my_a, char** a, const int& row, int col)
+bool check_dir (char** my_a, char** a, int row, int col, const int& dir)
 {
     while(my_a[row][col] = '$') {
-        if (col < 9) {
-            col++;
-            if (my_a[row][col] == '-') {
-                if (a[row][col] == '-') {
+        switch(dir){
+            case 1:
+                ++col;
+                if (9 < col) {
                     return true;
-                } else if (a[row][col] == '#') {
-                    return false;
+                } else {
+                    break;
                 }
-            } else if (my_a [row][col] == '*') {
-                return true;
-            }
-        } else {
-            return true;
+            case 2:
+                --col;
+                if (0 > col) {
+                    return true;
+                } else {
+                    break;
+                }
+            case 3:
+                ++row;
+                if (9 < row) {
+                    return true;
+                } else {
+                    break;
+                }
+            case 4:
+                --row;
+                if (0 > row){
+                    return true;
+                } else {
+                    break;
+                }
         }
-    }
-}
-
-bool check_left (char** my_a, char** a, const int& row, int col)
-{
-    while(my_a[row][col] = '$') {
-        if (col > 0) {
-            col--;
-            if (my_a[row][col] == '-') {
-                if (a[row][col] == '-') {
-                    return true;
-                } else if (a[row][col] == '#') {
-                    return false;
-                }
-            } else if (my_a [row][col] == '*') {
+        if (my_a[row][col] == '-') {
+            if (a[row][col] == '-') {
                 return true;
+            } else if (a[row][col] == '#') {
+                return false;
             }
-        } else {
-            return true;
-        }
-    }
-}
-
-
-bool check_down (char** my_a, char** a, int row, const int& col)
-{
-    while(my_a[row][col] = '$') {
-        if (row > 0) {
-            row--;
-            if (my_a[row][col] == '-') {
-                if (a[row][col] == '-') {
-                    return true;
-                } else if (a[row][col] == '#') {
-                    return false;
-                }
-            } else if (my_a [row][col] == '*') {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-}
-
-
-bool check_up (char** my_a, char** a, int row, const int& col)
-{
-    while(my_a[row][col] = '$') {
-        if (row < 9) {
-            row++;
-            if (my_a[row][col] == '-') {
-                if (a[row][col] == '-') {
-                    return true;
-                } else if (a[row][col] == '#') {
-                    return false;
-                }
-            } else if (my_a [row][col] == '*') {
-                return true;
-            }
-        } else {
+        } else if (my_a [row][col] == '*') {
             return true;
         }
     }
@@ -349,14 +311,13 @@ bool check_up (char** my_a, char** a, int row, const int& col)
 // filling the spaces around dead ship
 void fill (char** my_board, const int& row, const int& col)
 {
-    fill_right(my_board, row, col);
-    fill_left(my_board, row, col);
-    fill_up(my_board, row, col);
-    fill_down(my_board, row, col);
+    fill_dir(my_board, row, col, 1);
+    fill_dir(my_board, row, col, 2);
+    fill_dir(my_board, row, col, 3);
+    fill_dir(my_board, row, col, 4);
 }
 
-
-void fill_right (char ** my_board, const int& row, int col)
+void fill_dir (char** my_board, int row, int col, const int& dir)
 {
     while ('$' == my_board[row][col]) {
         for (int i = row - 1; i <= row + 1; ++i) {
@@ -372,82 +333,24 @@ void fill_right (char ** my_board, const int& row, int col)
                 }
             }
         }
-        if (9 != col) {
-            col++;
-        } else {
+        switch(dir){
+            case 1:
+                ++col;
+                break;
+            case 2:
+                --col;
+                break;
+            case 3:
+                ++row;
+                break;
+            case 4:
+                --row;
+                break;
+        }
+        if (col < 0 || col > 9 || row < 0 || row > 9) {
             break;
-        }
-    }
-}
-
-void fill_left (char ** my_board, const int& row, int col)
-{
-    while ('$' == my_board[row][col]) {
-        for (int i = row - 1; i <= row + 1; ++i) {
-            for (int j = col - 1; j <= col + 1; ++j) {
-                if (i < 0 || i > 9 || j < 0 || j > 9) {
-                    continue;
-                } else {
-                    if ('$' != my_board[i][j]) {
-                        my_board[i][j] = '*';
-                    } else {
-                        continue;
-                    }
-                }
-            }
-        }
-        if (0 != col){
-            col--;
         } else {
-            break;
-        }
-    }
-}
-
-void fill_up (char ** my_board, int row, const int& col)
-{
-    while ('$' == my_board[row][col]) {
-        for (int i = row - 1; i <= row + 1; ++i) {
-            for (int j = col - 1; j <= col + 1; ++j) {
-                if (i < 0 || i > 9 || j < 0 || j > 9) {
-                    continue;
-                } else {
-                    if ('$' != my_board[i][j]) {
-                        my_board[i][j] = '*';
-                    } else {
-                        continue;
-                    }
-                }
-            }
-        }
-        if (0 != row) {
-            row--;
-        } else {
-            break;
-        }
-    }
-}
-
-void fill_down (char ** my_board, int row, const int& col)
-{
-    while ('$' == my_board[row][col]) {
-        for (int i = row - 1; i <= row + 1; ++i) {
-            for (int j = col - 1; j <= col + 1; ++j) {
-                if (i < 0 || i > 9 || j < 0 || j > 9) {
-                    continue;
-                } else {
-                    if ('$' != my_board[i][j]) {
-                        my_board[i][j] = '*';
-                    } else {
-                        continue;
-                    }
-                }
-            }
-        }
-        if (9 != row) {
-            row++;
-        } else {
-            break;
+            continue;
         }
     }
 }

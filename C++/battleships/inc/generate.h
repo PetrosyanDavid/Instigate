@@ -25,3 +25,5 @@ void greet ();
 void run (char** , char**);
 bool place_ship (char**, const int&, const int&);
 char** generate_empty ();
+bool check_dir (char**, char**, int, int, const int&);
+void fill_dir (char**, int, int, const int&);

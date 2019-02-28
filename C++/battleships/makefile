@@ -1,35 +1,28 @@
-all: ./obj ./bin battleship  
+all:  bin/battleship
 
 CC := g++
 SOURCES := $(wildcard src/*cpp)
-OBJ := $(notdir $(SOURCES:.cpp=.o))
 OBJECTS := $(patsubst src/%.cpp, obj/%.o, $(SOURCES))
-#OBJ := $(patsubst %, obj/%,$(OBJECTS))
 INC := -I./inc
 DEPENDS := $(patsubst src/%.cpp,obj/%.dep,$(SOURCES))
 
-#default: \
-	@echo $(SOURCES)\
-	@echo $(OBJ) \
-	@echo $(OBJECTS)
+obj/%.dep : src/%.cpp
+	mkdir -p obj
+	$(CC) $(INC) -MM $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
 
+obj/%.o :
+	$(CC) -c $(INC) $< -o $@ 
 
-battleship : ./bin $(OBJECTS) 
-	$(CC) $(OBJECTS) -o bin/$@
+bin/battleship : $(OBJECTS) ./bin
+	$(CC) $(OBJECTS) -o $@
 
 ./bin:
 	mkdir -p bin
 
-./obj:
-	mkdir -p obj
-
 clean: 
-	rm -rf ./obj/*  ./bin/*
-
-obj/%.dep : src/%.cpp 
-	g++ $(INC) -MM $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
-
-obj/%.o : src/%.cpp ./obj 
-	$(CC) -c -I./inc $< -o $@ 
+	rm -rf ./obj  ./bin
 
 -include $(DEPENDS)
+
+
+
