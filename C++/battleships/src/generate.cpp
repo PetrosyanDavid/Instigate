@@ -1,16 +1,39 @@
 #include "generate.h"
 
+//help message
+void help ()
+{
+    std::cout << std::endl;
+    std::cout << "Your goal is to eliminate all enemy ships "
+        <<"positioned on 10x10 grid of tiles " << std::endl;
+    std::cout << "To check a tile user will need to make an input"
+        << "\nconsisting of one letter in range of (a - j)"<< std::endl;
+    std::cout << "immediately followed by number in range (1-10)"
+        << " e.g. 'b8' or 'h10'." << std::endl;
+    std::cout << "Additionally user can input '-1' to display enemy board"
+        << ",\n'-2' to quit the game or 'help' to display "
+        << "this message again" << std::endl;
+    std::cout << "\nOn enemy board the tiles will be marked"
+        << " in following way" << std::endl;
+    std::cout << "ships: '#' \nempty tiles: '-'" << std::endl;
+    std::cout << "\nOn board with users guesses the tiles will be marked as"
+        << std::endl;
+    std::cout << "unexplored tiles: '-' \nmisses: '*' \ncorrect guesses: '$'"
+        << std::endl;
+    std::cout << std::endl;
+}
+
 // Greeting message
 void greet()
 {
     std::cout << std::endl;
     std::cout << "\t\tWelcome to the game of battleship" << std::endl;
     std::cout << std::endl;
-    std::cout << "Your goal is to guess the positions of enemy ships" << std::endl;
-    std::cout << "Your input should have format of letter in range 'a-j' "
-        << "followed by number in range 1-10." << std::endl;
-    std::cout << "You can olso input '-1' to see the enemy board, "
-        << "or '-2 to quit the game'" << std::endl;
+    std::cout << "Your goal is to guess the positions of "
+        <<"randomly generated enemy ships." << std::endl;
+    std::cout << std::endl;
+    std::cout << "For additional information about rules and "
+        <<"input/output options please input 'help'." << std::endl;
     std::cout << std::endl;
 }
 
@@ -58,7 +81,10 @@ void take_input (char** ar, int& a, int& b)
     std::string s = "";
     while (true) {
         getline(std::cin, s);
-        if (s == "-1") {
+        if ("help" == s) {
+            help();
+            continue;
+        } else if ("-1" == s) {
             show (ar);
             continue;
         } else if ("-2" == s){
@@ -181,6 +207,7 @@ bool  place_ship (char** field, const int& ship_len, const int& dir)
     } while (true);
     return true;
 }
+
 // function for generating 10x10 field with randomly placed ships as 2d array
 char** generate ()
 {
