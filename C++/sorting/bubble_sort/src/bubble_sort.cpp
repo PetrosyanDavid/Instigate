@@ -5,9 +5,7 @@ int* generate_array (int n)
     int* arr = new int[n];
     for (int i = 0; i < n; ++i) {
         arr[i] = rand()%1000;
-        std::cout << arr[i] << " " << std::flush;
     }
-    std::cout << std::endl;
     return arr;
 }
 
