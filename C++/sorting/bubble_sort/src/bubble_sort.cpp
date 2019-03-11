@@ -18,7 +18,7 @@ void bubble_sort (int* arr, int n)
 {
     for (int i = 0; i < n; ++i) {
         bool check = true;
-        for (int j = 0; j < n; ++j) {
+        for (int j = 0; j < n-1; ++j) {
             if (arr[j] > arr [j+1]) {
                 std::swap(arr[j],arr[j+1]);
                 check = false;
