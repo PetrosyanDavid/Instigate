@@ -17,8 +17,7 @@ void destroy (int* arr)
 
 void merge (int* arr, int l, int m, int r)
 {
-    int my_array[r - l + 1];
-    int start = m+1;
+    int* my_array = new int[r - l + 1];
     int i = 0;
     int k = 0;
     int p = 0;
@@ -44,6 +43,7 @@ void merge (int* arr, int l, int m, int r)
     for (int i = 0; i <= r - l; ++i) {
         arr[l + i] = my_array[i];
     }
+    delete [] my_array;
 }
 
 
