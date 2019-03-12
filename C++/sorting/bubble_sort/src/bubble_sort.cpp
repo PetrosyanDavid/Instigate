@@ -2,7 +2,11 @@
 
 int* generate_array (int n)
 {
-    int* arr = new int[n];
+    try {
+        int* arr = new int[n];
+    } catch {
+        std::cout << "Memory allocation failed" << std::endl;
+    }
     for (int i = 0; i < n; ++i) {
         arr[i] = rand()%1000;
     }
