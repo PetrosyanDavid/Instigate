@@ -1,10 +1,17 @@
-all:  bin/insert_sort
+all:  bin/insertion_sort
 
 CC := g++
 SOURCES := $(wildcard src/*cpp)
 OBJECTS := $(patsubst src/%.cpp, obj/%.o, $(SOURCES))
 INC := -I./inc
 DEPENDS := $(patsubst src/%.cpp,obj/%.dep,$(SOURCES))
+
+ifeq ($(MAKECMDGOALS),)
+	-include $(DEPENDS)
+else ifeq ($(MAKECMDGOALS),all)
+	-include $(DEPENDS)
+endif
+
 
 obj/%.dep : src/%.cpp
 	mkdir -p obj
@@ -13,7 +20,7 @@ obj/%.dep : src/%.cpp
 obj/%.o :
 	$(CC) -c -g $(INC) $< -o $@ 
 
-bin/insert_sort : $(OBJECTS) ./bin
+bin/insertion_sort : $(OBJECTS) ./bin
 	$(CC) $(OBJECTS) -o $@
 
 ./bin:
@@ -22,7 +29,6 @@ bin/insert_sort : $(OBJECTS) ./bin
 .PHONY clean: 
 	rm -rf ./obj  ./bin
 
--include $(DEPENDS)
 
 
 
