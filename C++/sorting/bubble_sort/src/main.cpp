@@ -1,10 +1,11 @@
 #include "bubble_sort.hpp"
+#include "get_num.h"
 
 int main()
 {
+    int n = get_size();
     srand(time(NULL));
-    int n = 10;
-    int* arr = generate_array(n);
+    int* arr = create_array(n);
     print_array(arr, n);
     bubble_sort(arr, n);
     print_array(arr, n);
