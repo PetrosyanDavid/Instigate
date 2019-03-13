@@ -53,6 +53,23 @@ float get_float(){
     return result;
 }
 
+bool check_string_float (std::string s)
+{
+    bool fl = false;
+    if (s.empty()){
+        std::cout << "Empty input, please try again" << std::endl;
+        fl = true;
+    } else {
+        if (s[0] == '-') {
+            fl = check_float(s,1);
+        }
+        else {
+            fl = check_float(s,0);
+        }
+    }
+    return fl;
+}
+
 bool check_float (std::string s, int min)
 {
     int dot_count = 0;
@@ -70,19 +87,3 @@ bool check_float (std::string s, int min)
     return false;
 }
 
-bool check_string_float (std::string s)
-{
-    bool fl = false;
-    if (s.empty()){
-        std::cout << "Empty input, please try again" << std::endl;
-        fl = true;
-    } else {
-        if (s[0] == '-') {
-            fl = check_float(s,1);
-        }
-        else {
-            fl = check_float(s,0);
-        }
-    }
-    return fl;
-}

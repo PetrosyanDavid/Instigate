@@ -1,0 +1,1 @@
+obj/main.dep obj/main.o: src/main.cpp inc/bubble_sort.hpp inc/get_num.h

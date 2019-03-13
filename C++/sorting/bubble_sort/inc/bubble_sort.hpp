@@ -2,9 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 
-void fill_array (int*, int, std::string);
-void print_array (int* , int);
+void fill_array (int*,const int&,const std::string&);
+void print_array (int* , const int&);
 void destroy (int*);
-void bubble_sort (int*, int);
-int* create_array (int);
+void bubble_sort (int*, const int&);
+int* create_array (const int&);
 int get_size ();

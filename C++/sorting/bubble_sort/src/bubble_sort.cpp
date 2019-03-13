@@ -1,6 +1,6 @@
 #include "bubble_sort.hpp"
 #include "get_num.h"
-
+#include <cassert>
 
 int get_size()
 {
@@ -17,35 +17,34 @@ int get_size()
     return n;
 }
 
-int* create_array (int n)
+int* create_array (const int& n)
 {
+    int* arr = NULL;
     std::string gen("");
-    try {
-        int* arr = new int[n];
-        std::cout << "Please input 'm' if you want to generate array manually," <<
-            "\nor 'a' if you want it to be randomly generated" << std::endl;
-        while (true) {
-            getline(std::cin, gen);
-            if (gen == "a" || gen == "m") {
-                fill_array(arr, n, gen);
-                break;
-            } else {
-                std::cout << "Wrong input, try again" << std::endl;
-            }
+    arr = new int[n];
+    assert (arr);
+    std::cout << "Please input 'm' if you want to generate array manually," <<
+        "\nor 'a' if you want it to be randomly generated" << std::endl;
+    while (true) {
+        getline(std::cin, gen);
+        if (gen == "a" || gen == "m") {
+            fill_array(arr, n, gen);
+            break;
+        } else {
+            std::cout << "Wrong input, try again" << std::endl;
         }
-        return arr;
-    } catch (...) {
-        std::cout << "Memory allocation failed" << std::endl;
     }
+    return arr;
 }
 
-void fill_array (int* arr, int n, std::string gen)
+void fill_array (int* arr, const int& n,const std::string& gen)
 {
     if (gen == "a") {
         for (int i = 0; i < n; ++i) {
             arr[i] = rand()%1000;
         }
     } else {
+        std::cout << "Please input array elements" << std::endl;
         for (int i = 0; i < n; ++i) {
             arr[i] = get_int();
         }
@@ -57,7 +56,7 @@ void destroy (int* arr)
     delete [] arr;
 }
 
-void bubble_sort (int* arr, int n)
+void bubble_sort (int* arr, const int& n)
 {
     for (int i = 0; i < n; ++i) {
         bool check = true;
@@ -73,7 +72,7 @@ void bubble_sort (int* arr, int n)
     }
 }
 
-void print_array (int* arr, int n)
+void print_array (int* arr, const int& n)
 {
     for (int i = 0; i < n ; ++i) {
         std::cout << arr[i] << " " << std::flush;

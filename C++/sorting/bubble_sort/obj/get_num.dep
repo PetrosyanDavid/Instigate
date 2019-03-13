@@ -1,0 +1,1 @@
+obj/get_num.dep obj/get_num.o: src/get_num.cpp inc/get_num.h
