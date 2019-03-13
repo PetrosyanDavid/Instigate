@@ -67,12 +67,8 @@ void merge (int* arr, const int& l, const int& m, const int& r)
             my_array[p] = arr [l+i];
             p++;
             i++;
-        } else if (arr[l + i] >= arr [m + k +1] && m + k < r){
+        } else if (m + k < r){
             my_array [p] = arr [m+1+k];
-            p++;
-            k++;
-        } else if (l + i > m && m + k < r) {
-            my_array [p] = arr [m + k + 1];
             p++;
             k++;
         } else if (l + i <= m && m + k >= r) {
