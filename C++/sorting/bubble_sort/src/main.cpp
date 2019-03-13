@@ -3,8 +3,8 @@
 
 int main()
 {
-    int n = get_size();
     srand(time(NULL));
+    int n = get_size();
     int* arr = create_array(n);
     print_array(arr, n);
     bubble_sort(arr, n);

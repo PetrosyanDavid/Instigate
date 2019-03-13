@@ -2,8 +2,10 @@
 #include <cstdlib>
 #include <ctime>
 
-int* generate_array (int);
-void print_array (int* , int);
+int* create_array (const int&);
+int get_size ();
+void fill_array (int*,const int&,const std::string&);
+void print_array (int* , const int&);
 void destroy (int*);
-int fnd_min (int*, int, int);
-void select_sort (int*, int);
+int find_min (int*, const int&, const int&);
+void select_sort (int*, const int&);
