@@ -2,11 +2,17 @@
 
 int main()
 {
-    smart_array a(7,2);
+    smart_array a(10,2);
+    a.print();
     a[3] = 12;
-    std::cout << "array_element is " << a[3] <<std::endl;
-    smart_array b;
-    b = a;
-    std::cout << "array_element of copy is " << b[2] <<std::endl;
-    std::cout << "array_element of copy is " << b[3] <<std::endl;
+    a.print();
+    a.resize(12);
+    a.print();
+    std::cout << "Before pushback" << std::endl;
+    a.psh_back(16);
+    a.print();
+    a.resize(12);
+    a.print();
+    a.resize(14,111);
+    a.print();
 }

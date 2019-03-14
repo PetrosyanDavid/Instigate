@@ -47,7 +47,7 @@ int& smart_array::operator[](int index)
     return *(m_arr + index);
 }
 
-void smart_array::resize (int size, int def)
+void smart_array::resize (int size,const int& def)
 {
     int* tmp_ptr = NULL;
     tmp_ptr = new int[size];
@@ -85,4 +85,40 @@ void smart_array::resize (int size, int def)
 smart_array::~smart_array ()
 {
     delete [] m_arr;
+}
+
+void smart_array::pop ()
+{
+    resize(--m_size,0);
+}
+
+void smart_array::psh_back (int val)
+{
+    int a = m_size + 1;
+    resize(a, val);
+}
+
+void smart_array::insert (int pos, int val)
+{
+    resize(++m_size,0);
+    for (int i = m_size-1; i > pos; --i) {
+        m_arr[i] = m_arr[i -  1];
+    }
+    m_arr [pos] = val;
+}
+
+void smart_array::erase (int pos)
+{
+    for (int i = pos; i < m_size; ++i) {
+        m_arr[i] = m_arr[i + 1];
+    }
+    resize(--m_size,0);
+}
+
+void smart_array::print ()
+{
+    for (int i = 0; i < m_size; ++i) {
+        std::cout << m_arr[i] << " " << std::flush;
+    }
+    std::cout << std::endl;
 }
