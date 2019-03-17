@@ -19,7 +19,7 @@ int get_size()
 
 int* create_array (const int& n)
 {
-    int* arr = NULL;
+    int* arr = nullptr;
     std::string gen("");
     arr = new int[n];
     assert (arr);
@@ -39,6 +39,7 @@ int* create_array (const int& n)
 
 void fill_array (int* arr, const int& n,const std::string& gen)
 {
+    assert(arr);
     if (gen == "a") {
         for (int i = 0; i < n; ++i) {
             arr[i] = rand()%1000;
@@ -53,17 +54,49 @@ void fill_array (int* arr, const int& n,const std::string& gen)
 
 void destroy (int* arr)
 {
+    assert(arr);
     delete [] arr;
+    arr = nullptr;
 }
 
-void merge (int* arr, const int& l, const int& m, const int& r)
+std::string get_type()
 {
+    std::string type = " ";
+    std::cout << "Please input '+' for ascending sorting, or '-' "
+        << "for descending sorting" << std::endl;
+    while (true) {
+        getline(std::cin, type);
+        if (type == "+" || type == "-") {
+            break;
+        } else {
+            std::cout << "Wrong input for type, try again" << std::endl;
+            continue;
+        }
+    }
+    return type;
+}
+
+bool check_relation (const std::string& type, const int& a, const int& b)
+{
+    bool cond = true;
+    if (type == "+") {
+        cond = (a > b);
+    } else if (type == "-"){
+        cond = (a <= b);
+    }
+    return cond;
+}
+
+void merge (int* arr, const int& l, const int& m, const int& r,
+        const std::string& type)
+{
+    assert(arr);
     int* my_array = new int[r - l + 1];
     int i = 0;
     int k = 0;
     int p = 0;
     while (p <= r-l) {
-        if (arr[l+i] < arr[m+1+k] && l+i <= m) {
+        if (!check_relation (type, arr[l+i], arr[m+1+k]) && l+i <= m) {
             my_array[p] = arr [l+i];
             p++;
             i++;
@@ -83,16 +116,17 @@ void merge (int* arr, const int& l, const int& m, const int& r)
     delete [] my_array;
 }
 
-void merge_sort (int* arr, const int& l, const int& r)
+void merge_sort (int* arr, const int& l, const int& r, const std::string& type)
 {
+    assert(arr);
     int m = (r + l)/2;
     if (l != m) {
-        merge_sort (arr, l, m);
+        merge_sort (arr, l, m, type);
     }
     if (m+1 != r) {
-        merge_sort (arr, m+1, r);
+        merge_sort (arr, m+1, r, type);
     }
-    merge (arr, l, m, r);
+    merge (arr, l, m, r, type);
 }
 
 void print_array (int* arr, const int& n)

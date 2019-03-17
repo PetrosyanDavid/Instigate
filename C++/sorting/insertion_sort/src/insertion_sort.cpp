@@ -19,7 +19,7 @@ int get_size()
 
 int* create_array (const int& n)
 {
-    int* arr = NULL;
+    int* arr = nullptr;
     std::string gen("");
     arr = new int[n];
     assert (arr);
@@ -39,6 +39,7 @@ int* create_array (const int& n)
 
 void fill_array (int* arr, const int& n, const std::string& gen)
 {
+    assert(arr);
     if (gen == "a") {
         for (int i = 0; i < n; ++i) {
             arr[i] = rand()%1000;
@@ -53,16 +54,47 @@ void fill_array (int* arr, const int& n, const std::string& gen)
 
 void destroy (int* arr)
 {
+    assert(arr);
     delete [] arr;
+    arr = nullptr;
 }
 
-void insertion_sort (int* arr,const int& n)
+std::string get_type()
 {
+    std::string type = " ";
+    std::cout << "Please input '+' for ascending sorting, or '-' "
+        << "for descending sorting" << std::endl;
+    while (true) {
+        getline(std::cin, type);
+        if (type == "+" || type == "-") {
+            break;
+        } else {
+            std::cout << "Wrong input for type, try again" << std::endl;
+            continue;
+        }
+    }
+    return type;
+}
+
+bool check_relation (const std::string& type, const int& a, const int& b)
+{
+    bool cond = true;
+    if (type == "+") {
+        cond = (a > b);
+    } else if (type == "-"){
+        cond = (a <= b);
+    }
+    return cond;
+}
+
+void insertion_sort (int* arr,const int& n, const std::string& type)
+{
+    assert(arr);
     int tmp = 0;
     for (int i = 1; i < n; ++i) {
         tmp = arr[i];
         for (int k = i-1; k >= 0; --k) {
-            if (tmp < arr[k]){
+            if (!check_relation (type, tmp, arr[k])) {
                 arr[k+1] = arr[k];
                 if (0 == k) {
                     arr[k] = tmp;
@@ -77,6 +109,7 @@ void insertion_sort (int* arr,const int& n)
 
 void print_array (int* arr,const int& n)
 {
+    assert(arr);
     for (int i = 0; i < n ; ++i) {
         std::cout << arr[i] << " " << std::flush;
     }

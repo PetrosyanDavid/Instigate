@@ -19,7 +19,7 @@ int get_size()
 
 int* create_array (const int& n)
 {
-    int* arr = NULL;
+    int* arr = nullptr;
     std::string gen("");
     arr = new int[n];
     assert (arr);
@@ -39,6 +39,7 @@ int* create_array (const int& n)
 
 void fill_array (int* arr, const int& n,const std::string& gen)
 {
+    assert(arr);
     if (gen == "a") {
         for (int i = 0; i < n; ++i) {
             arr[i] = rand()%1000;
@@ -53,14 +54,45 @@ void fill_array (int* arr, const int& n,const std::string& gen)
 
 void destroy (int* arr)
 {
+    assert(arr);
     delete [] arr;
+    arr = nullptr;
 }
 
-int split (int* arr, const int& l, const int& r)
+std::string get_type()
 {
+    std::string type = " ";
+    std::cout << "Please input '+' for ascending sorting, or '-' "
+        << "for descending sorting" << std::endl;
+    while (true) {
+        getline(std::cin, type);
+        if (type == "+" || type == "-") {
+            break;
+        } else {
+            std::cout << "Wrong input for type, try again" << std::endl;
+            continue;
+        }
+    }
+    return type;
+}
+
+bool check_relation (const std::string& type, const int& a, const int& b)
+{
+    bool cond = true;
+    if (type == "+") {
+        cond = (a > b);
+    } else if (type == "-"){
+        cond = (a <= b);
+    }
+    return cond;
+}
+
+int split (int* arr, const int& l, const int& r, const std::string& type)
+{
+    assert(arr);
     int m = l;
     for (int i = l; i <= r - 1; ++i){
-        if (arr[i] < arr[r]) {
+        if (check_relation(type, arr[r], arr[i])) {
             std::swap(arr[m], arr[i]);
             m++;
         }
@@ -69,17 +101,19 @@ int split (int* arr, const int& l, const int& r)
     return m;
 }
 
-void quick_sort (int* arr, const int& l, const int& r)
+void quick_sort (int* arr, const int& l, const int& r, const std::string& type)
 {
+    assert(arr);
     if (r > l) {
-        int mid = split (arr, l, r);
-        quick_sort (arr, l, mid-1);
-        quick_sort (arr, mid + 1, r);
+        int mid = split (arr, l, r, type);
+        quick_sort (arr, l, mid-1, type);
+        quick_sort (arr, mid + 1, r, type);
     }
 }
 
 void print_array (int* arr, const int& n)
 {
+    assert(arr);
     for (int i = 0; i < n ; ++i) {
         std::cout << arr[i] << " " << std::flush;
     }

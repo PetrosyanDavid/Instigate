@@ -19,7 +19,7 @@ int get_size()
 
 int* create_array (const int& n)
 {
-    int* arr = NULL;
+    int* arr = nullptr;
     std::string gen("");
     arr = new int[n];
     assert (arr);
@@ -39,6 +39,7 @@ int* create_array (const int& n)
 
 void fill_array (int* arr, const int& n,const std::string& gen)
 {
+    assert(arr);
     if (gen == "a") {
         for (int i = 0; i < n; ++i) {
             arr[i] = rand()%1000;
@@ -53,16 +54,47 @@ void fill_array (int* arr, const int& n,const std::string& gen)
 
 void destroy (int* arr)
 {
+    assert(arr);
     delete [] arr;
+    arr = nullptr;
 }
 
-int find_min (int* arr, const int& n, const int& start)
+std::string get_type()
 {
+    std::string type = " ";
+    std::cout << "Please input '+' for ascending sorting, or '-' "
+        << "for descending sorting" << std::endl;
+    while (true) {
+        getline(std::cin, type);
+        if (type == "+" || type == "-") {
+            break;
+        } else {
+            std::cout << "Wrong input for type, try again" << std::endl;
+            continue;
+        }
+    }
+    return type;
+}
+
+bool check_relation (const std::string& type, const int& a, const int& b)
+{
+    bool cond = true;
+    if (type == "+") {
+        cond = (a > b);
+    } else if (type == "-"){
+        cond = (a <= b);
+    }
+    return cond;
+}
+
+int find_min_max (int* arr, const int& n, const int& start, const std::string& type)
+{
+    assert(arr);
     int num = start;
-    int min = arr[start];
+    int min_max = arr[start];
     for (int i = start; i < n; ++i) {
-        if (arr[i] < min ) {
-            min = arr[i];
+        if (check_relation(type, min_max, arr[i])) {
+            min_max = arr[i];
             num = i;
         } else {
             continue;
@@ -72,13 +104,14 @@ int find_min (int* arr, const int& n, const int& start)
 }
 
 
-void select_sort (int* arr, const int& n)
+void select_sort (int* arr, const int& n, const std::string& type)
 {
+    assert(arr);
     int tmp = 0;
     int tmp_index = 0;
     for (int i = 0; i < n; ++i){
         tmp = arr[i];
-        tmp_index = find_min (arr, n, i);
+        tmp_index = find_min_max (arr, n, i, type);
         arr[i] = arr[tmp_index];
         arr[tmp_index] = tmp;
     }
@@ -86,6 +119,7 @@ void select_sort (int* arr, const int& n)
 
 void print_array (int* arr, const int& n)
 {
+    assert(arr);
     for (int i = 0; i < n ; ++i) {
         std::cout << arr[i] << " " << std::flush;
     }

@@ -31,7 +31,7 @@ bool check_string_int (std::string s)
 
 bool check_int (std::string s, int min)
 {
-    for (int i = min; i < s.size(); ++i) {
+    for (unsigned int i = min; i < s.size(); ++i) {
         if(s[i] < '0' || s[i] > '9') {
             std::cout << "Wrong input, please try again " << std::endl;
             return true;
@@ -73,7 +73,7 @@ bool check_string_float (std::string s)
 bool check_float (std::string s, int min)
 {
     int dot_count = 0;
-    for (int i = min; i < s.size(); ++i) {
+    for (unsigned int i = min; i < s.size(); ++i) {
         if(s[i] < '0' || s[i] > '9') {
             if(s[i] == '.' && 0 == dot_count){
                 dot_count += 1;

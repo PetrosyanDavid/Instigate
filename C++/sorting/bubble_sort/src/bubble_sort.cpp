@@ -19,7 +19,7 @@ int get_size()
 
 int* create_array (const int& n)
 {
-    int* arr = NULL;
+    int* arr = nullptr;
     std::string gen("");
     arr = new int[n];
     assert (arr);
@@ -37,8 +37,9 @@ int* create_array (const int& n)
     return arr;
 }
 
-void fill_array (int* arr, const int& n,const std::string& gen)
+void fill_array (int* arr, const int& n, const std::string& gen)
 {
+    assert(arr);
     if (gen == "a") {
         for (int i = 0; i < n; ++i) {
             arr[i] = rand()%1000;
@@ -53,15 +54,48 @@ void fill_array (int* arr, const int& n,const std::string& gen)
 
 void destroy (int* arr)
 {
+    assert(arr);
     delete [] arr;
+    arr = nullptr;
 }
 
-void bubble_sort (int* arr, const int& n)
+std::string get_type()
 {
+    std::string type = " ";
+    std::cout << "Please input '+' for ascending sorting, or '-' "
+        << "for descending sorting" << std::endl;
+    while (true) {
+        getline(std::cin, type);
+        if (type == "+" || type == "-") {
+            break;
+        } else {
+            std::cout << "Wrong input for type, try again" << std::endl;
+            continue;
+        }
+    }
+    return type;
+}
+
+bool check_relation (const std::string& type, const int& a, const int& b)
+{
+    bool cond = true;
+    if (type == "+") {
+        cond = (a > b);
+    } else if (type == "-"){
+        cond = (a <= b);
+    }
+    return cond;
+}
+
+void bubble_sort (int* arr, const int& n, const std::string& type)
+{
+    assert(arr);
+    bool cond  = true;
     for (int i = 0; i < n; ++i) {
         bool check = true;
         for (int j = 0; j < n-1; ++j) {
-            if (arr[j] > arr [j+1]) {
+            cond = check_relation (type,arr[j],arr[j+1]);
+            if (cond) {
                 std::swap(arr[j],arr[j+1]);
                 check = false;
             }
@@ -74,6 +108,7 @@ void bubble_sort (int* arr, const int& n)
 
 void print_array (int* arr, const int& n)
 {
+    assert(arr);
     for (int i = 0; i < n ; ++i) {
         std::cout << arr[i] << " " << std::flush;
     }
