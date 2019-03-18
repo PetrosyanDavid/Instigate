@@ -1,4 +1,5 @@
 #include "shape.hpp"
+#include <cmath>
 
 shape::shape ():
     m_name("random "),
@@ -11,7 +12,7 @@ shape::shape (std::string name, std::string color):
     m_name(name),
     m_color(color)
 {
-    std::cout << "Parametrized constructor for shape called" << std::endl;
+//    std::cout << "Parametrized constructor for shape called" << std::endl;
 }
 
 std::string shape::get_name ()
@@ -22,6 +23,11 @@ std::string shape::get_name ()
 std::string shape::get_color ()
 {
     return m_color;
+}
+
+void shape::get_info()
+{
+    std::cout << "get info of shape" << std::endl;
 }
 
 rectangle::rectangle ():
@@ -36,15 +42,44 @@ rectangle::rectangle (std::string color, int width, int height):
     m_width(width),
     m_height(height)
 {
-    std::cout << "Parametrized constructor for rectangle" << std::endl;
+//    std::cout << "Parametrized constructor for rectangle" << std::endl;
 }
 
-int rectangle::get_area ()
+double rectangle::get_area ()
 {
     return m_width*m_height;
 }
 
 void rectangle::get_info ()
 {
-    std::cout << "Name = " << m_name << "\nColor = " << m_color << std::endl;
+    std::cout << "Name = " << m_name << "\nColor = " << m_color
+        << "\nWidth = " << m_width << "\nHeight = " << m_height << std::endl;
+    std::cout << std::endl;
 }
+
+
+circle::circle ():
+    m_radius(0)
+{
+    std::cout << "Default constructor for circle" << std::endl;
+}
+
+circle::circle (std::string color, int radius):
+    shape ("circle", color),
+    m_radius(radius)
+{
+//    std::cout << "Parametrized constructor for circle" << std::endl;
+}
+
+double circle::get_area()
+{
+    return M_PI*m_radius*m_radius;
+}
+
+void circle::get_info ()
+{
+    std::cout << "Name = " << m_name << "\nColor = " << m_color
+        << "\nRadius = " << m_radius << std::endl;
+    std::cout << std::endl;
+}
+

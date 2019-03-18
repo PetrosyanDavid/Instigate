@@ -29,8 +29,8 @@ int main ()
     }
     int m_arr[10];
     for (int i = 0; i < 10; ++i) {
-        rectangle* rec = dynamic_cast<rectangle*>(arr[i]);
-        circle* cir = dynamic_cast<circle*>(arr[i]);
+        rectangle* rec = dynamic_cast<rectangle*>(&arr[i]);
+        circle* cir = dynamic_cast<circle*>(&arr[i]);
         if (rec) {
             nrec++;
             m_arr[i] = 1;
