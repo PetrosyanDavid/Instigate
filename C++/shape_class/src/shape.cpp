@@ -15,6 +15,12 @@ shape::shape (std::string name, std::string color):
 //    std::cout << "Parametrized constructor for shape called" << std::endl;
 }
 
+shape::shape (const shape& a)
+{
+    (void) a;
+    std::cout << "Copy constructor for shape" << std::endl;
+}
+
 std::string shape::get_name ()
 {
     return m_name;
@@ -45,6 +51,12 @@ rectangle::rectangle (std::string color, int width, int height):
 //    std::cout << "Parametrized constructor for rectangle" << std::endl;
 }
 
+rectangle::rectangle (const rectangle& r) : shape(r)
+{
+    (void) r;
+    std::cout << "Copy constructor for rectangle" << std::endl;
+}
+
 double rectangle::get_area ()
 {
     return m_width*m_height;
@@ -69,6 +81,12 @@ circle::circle (std::string color, int radius):
     m_radius(radius)
 {
 //    std::cout << "Parametrized constructor for circle" << std::endl;
+}
+
+circle::circle (const circle& c) : shape()
+{
+    (void) c;
+    std::cout << "Copy constructor for circle" << std::endl;
 }
 
 double circle::get_area()

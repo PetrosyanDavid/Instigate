@@ -12,8 +12,7 @@ class shape
         shape (std::string name , std::string color);
         std::string get_color();
         std::string get_name();
-       // void set_color(std::string);
-       // void set_name(std::string);
+        shape (const shape&);
         virtual double get_area() = 0;
         virtual void get_info();
 };
@@ -26,6 +25,7 @@ class rectangle : public shape
     public:
         rectangle ();
         rectangle (std::string, int, int);
+        rectangle (const rectangle&);
         double get_area ();
         void get_info ();
 };
@@ -37,6 +37,7 @@ class circle : public shape
     public:
         circle ();
         circle (std::string, int);
+        circle (const circle&);
         double get_area ();
         void get_info ();
 };

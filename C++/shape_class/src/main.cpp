@@ -47,4 +47,11 @@ int main ()
     for (int i = 0; i < 10; ++i) {
         arr[i]->get_info();
     }
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    circle b1(b);
+
 }
