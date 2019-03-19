@@ -12,13 +12,22 @@ shape::shape (std::string name, std::string color):
     m_name(name),
     m_color(color)
 {
-//    std::cout << "Parametrized constructor for shape called" << std::endl;
+    std::cout << "Parametrized constructor for shape called" << std::endl;
 }
 
 shape::shape (const shape& a)
 {
-    (void) a;
+    m_name = a.m_name;
+    m_color = a.m_color;
     std::cout << "Copy constructor for shape" << std::endl;
+}
+
+shape& shape::operator= (const shape& a)
+{
+    m_name = a.m_name;
+    m_color = a.m_color;
+    std::cout << "Assignment constructor for shape" << std::endl;
+    return *this;
 }
 
 std::string shape::get_name ()
@@ -76,17 +85,27 @@ circle::circle ():
     std::cout << "Default constructor for circle" << std::endl;
 }
 
-circle::circle (std::string color, int radius):
-    shape ("circle", color),
+circle::circle (std::string name, std::string color, int radius):
+    shape (name , color),
     m_radius(radius)
 {
-//    std::cout << "Parametrized constructor for circle" << std::endl;
+    std::cout << "Parametrized constructor for circle" << std::endl;
 }
 
-circle::circle (const circle& c) : shape()
+circle::circle (const circle& c, std::string name, std::string
+         color) : shape(name ,color)
 {
-    (void) c;
+    m_radius = c.m_radius;
     std::cout << "Copy constructor for circle" << std::endl;
+}
+
+circle& circle::operator= (const circle& c)
+{
+    m_radius = c.m_radius;
+    m_name = c.m_name;
+    m_color = c.m_color;
+    std::cout << "assignement constructor for circle" << std::endl;
+    return *this;
 }
 
 double circle::get_area()

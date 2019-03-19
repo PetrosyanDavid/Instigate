@@ -13,6 +13,7 @@ class shape
         std::string get_color();
         std::string get_name();
         shape (const shape&);
+        shape& operator= (const shape&);
         virtual double get_area() = 0;
         virtual void get_info();
 };
@@ -36,8 +37,9 @@ class circle : public shape
         int m_radius;
     public:
         circle ();
-        circle (std::string, int);
-        circle (const circle&);
+        circle (std::string,std::string, int);
+        circle (const circle&, std::string, std::string);
+        circle& operator= (const circle&);
         double get_area ();
         void get_info ();
 };

@@ -7,7 +7,7 @@ shape* get_random ()
     if (rand()%2 == 0) {
         return new rectangle ( "red", rand()%10, rand()%10);
     } else {
-        return new circle ("blue", rand()%10);
+        return new circle ("circle", "blue", rand()%10);
     }
 }
 
@@ -20,7 +20,7 @@ int main ()
     //a.get_area();
     a.get_info();
     std::cout << "Rectangle area = " << a.get_area() << std::endl;
-    circle b("green", 15);
+    circle b("circle","green", 15);
     b.get_info();
     std::cout << "Circle area = " << b.get_area() << std::endl;
     shape* arr[10];
@@ -52,6 +52,17 @@ int main ()
     std::cout << std::endl;
     std::cout << std::endl;
 
-    circle b1(b);
+    circle b1(b, "sasas", "wdsda");
+    b.get_info();
 
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+
+    circle b2 ("asasa", "opkdapsd", 152);
+    b2.get_info();
+
+    b2 = b;
+    b2.get_info();
 }
