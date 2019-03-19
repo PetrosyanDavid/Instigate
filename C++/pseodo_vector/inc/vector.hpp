@@ -10,13 +10,20 @@ class vector
         T* m_arr;
         int m_size;
         int m_cap;
+        void resize();
     public:
         vector ();
         vector (int);
         vector (const vector&);
         vector& operator=(const vector&);
+        void insert (const int&, const T&);
+        T pop();
+        void erase (int);
+        T& operator[] (const int&);
+        bool operator== (const vector&);
         void push_back (T );
         void print ();
+        void swap (int, int);
         ~vector();
 };
 
@@ -77,6 +84,9 @@ vector<T>& vector<T>::operator=(const vector& a)
 template <typename T>
 void vector<T>::push_back (T a)
 {
+    if (m_size == m_cap) {
+        resize();
+    }
     m_arr[m_size] = a;
     m_size ++;
 }
@@ -94,5 +104,93 @@ template <typename T>
 vector<T>::~vector ()
 {
     delete [] m_arr;
+    m_arr = nullptr;
+}
+
+template <typename T>
+T vector<T>::pop ()
+{
+    --m_size;
+    return m_arr[m_size-1];
+}
+
+template <typename T>
+T& vector<T>::operator[] (const int& pos)
+{
+    return m_arr[pos];
+}
+
+template <typename T>
+void vector<T>::insert (const int& pos, const  T& val)
+{
+    if (pos > m_size -1) {
+        std::cout << "Position is off limits" << std::endl;
+    } else {
+        if (m_size == m_cap) {
+            resize();
+        }
+        for (int i = m_size; i > pos; -- i) {
+            m_arr[i] = m_arr[i - 1];
+        }
+        m_arr[pos] = val;
+        ++m_size;
+    }
+}
+
+template <typename T>
+void vector<T>::erase (int pos)
+{
+    if (pos > m_size - 1) {
+        std::cout << "No element exists at position " << pos << std::endl;
+    } else {
+        for (int i = pos; i < m_size; ++i) {
+            m_arr[i] = m_arr[i + 1];
+        }
+        --m_size;
+    }
+}
+
+template <typename T>
+bool vector<T>::operator== (const vector& a)
+{
+    if (m_size != a.m_size) {
+        return false;
+    } else {
+        for (int i = 0; i < m_size; ++i) {
+            if (m_arr[i] != a.m_arr[i]) {
+                return false;
+            } else {
+                continue;
+            }
+        }
+    }
+    return true;
+}
+
+template <typename T>
+void vector<T>::swap (int i, int j)
+{
+    if (i > m_size - 1 || j > m_size - 1) {
+        std::cout << "No element exists at one ov positions" << std::endl;
+    } else {
+        std::swap(m_arr[i], m_arr[j]);
+    }
+}
+
+template <typename T>
+void vector<T>::resize ()
+{
+    m_cap *=2;
+    T* tmp_ptr = new T[m_cap];
+    for (int i = 0; i < m_cap/2; ++i) {
+        tmp_ptr[i] = m_arr[i];
+    }
+    for (int i = m_cap/2; i < m_cap; ++i) {
+        tmp_ptr[i] = 0;
+    }
+    delete [] m_arr;
+    m_arr = nullptr;
+    m_arr = tmp_ptr;
+    std::cout << "resize called" << std::endl;
 }
 #endif
