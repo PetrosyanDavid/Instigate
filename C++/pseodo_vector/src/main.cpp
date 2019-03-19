@@ -12,7 +12,7 @@ int main()
     a.print();
     a.swap(0,6);
     a.print();
-    a.insert(5,123);
+    a.insert(888,123);
     a.print();
     std::cout << a[4] << std::endl;
     a[4] = 777;
@@ -23,6 +23,6 @@ int main()
     b.push_back(14);
     b.print();
     b.push_back(15);
-    b.print();
+    std::cout << a;
 
 }

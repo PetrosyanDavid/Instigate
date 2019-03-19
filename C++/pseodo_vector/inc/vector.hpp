@@ -2,6 +2,9 @@
 #define VECTOR_HPP
 
 #include <iostream>
+#include <cassert>
+template <typename T> class vector;
+template <typename T> std::ostream& operator<< (std::ostream& , const vector<T>&);
 
 template <typename T>
 class vector
@@ -25,7 +28,18 @@ class vector
         void print ();
         void swap (int, int);
         ~vector();
+        friend std::ostream& operator<< <T> (std::ostream&, const vector<T>&);
 };
+
+template <typename T>
+std::ostream& operator<< (std::ostream& stream, const vector<T>& v)
+{
+    for (int i = 0; i < v.m_size; ++i) {
+        stream << v.m_arr[i] << " " << std::flush;
+    }
+    std::cout << std::endl;
+    return stream;
+}
 
 template <typename T>
 vector<T>::vector () :
@@ -117,6 +131,7 @@ T vector<T>::pop ()
 template <typename T>
 T& vector<T>::operator[] (const int& pos)
 {
+    assert(pos < m_size);
     return m_arr[pos];
 }
 
