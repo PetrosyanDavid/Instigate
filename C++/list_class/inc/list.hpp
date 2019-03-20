@@ -1,6 +1,7 @@
 #ifndef LIST_HPP
 #define LIST_HPP
 #include <iostream>
+#include <cassert>
 
 template <class T>
 struct node
@@ -10,6 +11,7 @@ struct node
         node* m_node;
         node();
         node(T );
+        node(T, node*);
 };
 
 template <class T>
@@ -23,6 +25,11 @@ node<T>::node (T data):
     m_node(nullptr)
 {}
 
+template <class T>
+node<T>::node (T data, node* adress):
+    m_data(data),
+    m_node(adress)
+{}
 
 template <class T>
 class list
@@ -34,6 +41,9 @@ class list
         void push_back (const T&);
         ~list();
         void print();
+        T pop();
+        void insert (const int&, const T&);
+        void remove (const int&);
 };
 
 template <class T>
@@ -90,4 +100,56 @@ void list<T>::print ()
         std::cout << std::endl;
     }
 }
+
+template <class T>
+T list<T>::pop ()
+{
+    assert(first);
+    node<T>* tmp_ptr = first;
+    node<T>* tmp_ptr_2 = tmp_ptr;
+    while (tmp_ptr->m_node != nullptr) {
+        tmp_ptr_2 =tmp_ptr;
+        tmp_ptr = tmp_ptr->m_node;
+    }
+    T a = tmp_ptr->m_data;
+    delete tmp_ptr;
+    tmp_ptr_2->m_node = nullptr;
+    --len;
+    return a;
+}
+
+template <class T>
+void list<T>::insert (const int& pos, const T& data)
+{
+    if (len - 1 < pos) {
+        std::cout << "Out of range, for insert" << std::endl;
+    } else {
+        node<T>* tmp_ptr_1 = first;
+        node<T>* tmp_ptr_2 = first->m_node;
+        for (int i = 0; i < pos-1; ++i) {
+            tmp_ptr_1 = tmp_ptr_2;
+            tmp_ptr_2 = tmp_ptr_1->m_node;
+        }
+        tmp_ptr_1->m_node = new node<T>(data,tmp_ptr_2);
+    }
+    ++ len;
+}
+
+template <class T>
+void list<T>::remove (const int& pos)
+{
+    if (len - 1 < pos) {
+        std::cout << "Out of range for remove" << std::endl;
+    } else {
+        node<T>* tmp_ptr = first;
+        for (int i = 0; i < pos-1; ++i) {
+            tmp_ptr = tmp_ptr->m_node;
+        }
+        node<T>* pos_ptr = tmp_ptr->m_node;
+        tmp_ptr->m_node = pos_ptr->m_node;
+        delete pos_ptr;
+    }
+    --len;
+}
+
 #endif
