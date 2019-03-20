@@ -165,7 +165,9 @@ template <typename T>
 void vector<T>::resize ()
 {
     m_cap *=2;
-    T* tmp_ptr = new T[m_cap];
+    T* tmp_ptr = nullptr;
+    tmp_ptr = new T[m_cap];
+    assert(tmp_ptr);
     for (int i = 0; i < m_cap/2; ++i) {
         tmp_ptr[i] = m_arr[i];
     }
