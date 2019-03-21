@@ -17,4 +17,16 @@ int main()
     a.print();
     a.remove(4);
     a.print();
+    std::cout << a[2] << std::endl;
+    a[2] = 888;
+    a.print();
+    list<int> b = a;
+    b.print();
+    list<int> c;
+    c = a;
+    c.print();
+    a.insert(0,555);
+    a.print();
+    a.reverse();
+    a.print();
 }
