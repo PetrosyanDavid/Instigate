@@ -13,6 +13,7 @@ struct node
         node* m_right;
         node ();
         node (T );
+        node (T, node<T>*, node<T>*);
 };
 
 template <class T>
@@ -29,19 +30,30 @@ node<T>:: node (T data):
 {}
 
 template <class T>
+node<T>:: node (T data, node<T>* left, node<T>* right):
+    m_data(data),
+    m_left(left),
+    m_right(right)
+{}
+
+template <class T>
 class tree
 {
-    public:
+    private:
         node<T>* m_root;
+        void insert_helper (node<T>*, const T&);
+        void print_helper (node<T>* adress);
+        bool find_helper (node<T>*,const T&);
+        void destroy(node<T>*);
+        node<T>* find_adress_helper (node<T>*,const T&, char&);
+        void remove_adress (node<T>*, const T&);
+    public:
         tree ();
         ~tree();
         void insert (const T&);
-        void insert_helper (node<T>*, const T&);
         bool find (const T&);
         void print ();
-        void print_helper (node<T>* adress);
-        void destroy(node<T>*);
-        bool find_helper (node<T>*,const T&);
+        void remove (const T&);
 };
 
 template <class T>
@@ -149,6 +161,103 @@ bool tree<T>::find_helper (node<T>* adress,const T& val)
             return find_helper(adress->m_right, val);
         } else {
             return false;
+        }
+    }
+}
+
+template <class T>
+node<T>* tree<T>::find_adress_helper (node<T>* adress, const T& val, char& side)
+{
+    assert (val != adress->m_data);
+    if (val < adress->m_data) {
+        if (adress->m_left != nullptr) {
+            if(adress->m_left->m_data == val) {
+                side = 'l';
+                return adress;
+            } else {
+                return find_adress_helper(adress->m_left, val, side);
+            }
+        } else {
+            return nullptr;
+        }
+    } else {
+        if (adress->m_right != nullptr) {
+            if (adress->m_right->m_data == val) {
+                side = 'r';
+                return adress;
+            } else {
+                return find_adress_helper(adress->m_right, val, side);
+            }
+        } else {
+            return nullptr;
+        }
+    }
+}
+
+template <class T>
+void tree<T>::remove(const T& val)
+{
+    if (m_root == nullptr) {
+        std::cout << "Nothing in tree" << std::endl;
+    } else if (val == m_root->m_data){
+        node<T>* tmp_ptr = new node<T>(val + 1, m_root, nullptr);
+        remove_adress (tmp_ptr, val);
+        m_root = tmp_ptr->m_left;
+        delete tmp_ptr;
+    } else {
+        remove_adress (m_root, val);
+    }
+}
+
+template <class T>
+void tree<T>::remove_adress(node<T>* adress, const T& val)
+{
+    node<T>* rem_ptr = nullptr;
+    char side = ' ';
+    node<T>* current = nullptr;
+    assert (adress->m_data != val);
+    rem_ptr = find_adress_helper(adress, val, side);
+    if  (rem_ptr == nullptr) {
+        return;
+    }
+    if ('r' == side) {
+        current = rem_ptr->m_right;
+    } else if ('l' == side) {
+        current = rem_ptr->m_left;
+    }
+    if (current->m_left == nullptr && current->m_right == nullptr) {
+        delete current;
+        current = nullptr;
+        if ('r' == side){
+            rem_ptr->m_right = nullptr;
+        } else if ('l' == side) {
+            rem_ptr->m_left = nullptr;
+        }
+    } else if (current->m_left == nullptr) {
+        node<T>* tmp_r = current->m_right;
+        current->m_data = tmp_r->m_data;
+        current->m_right = tmp_r->m_right;
+        current->m_left = tmp_r->m_left;
+        delete tmp_r;
+    } else if (current->m_right == nullptr) {
+        node<T>* tmp_l = current->m_left;
+        current->m_data = tmp_l->m_data;
+        current->m_right = tmp_l->m_right;
+        current->m_left = tmp_l->m_left;
+        delete tmp_l;
+    } else {
+        node<T>* next = current->m_left;
+        if (next->m_right == nullptr) {
+            T tmp_val = next->m_data;
+            remove_adress(current, next->m_data);
+            current->m_data = tmp_val;
+        } else {
+            while (next->m_right->m_right != nullptr) {
+                next = next->m_right;
+            }
+            T tmp_val = next->m_right->m_data;
+            remove_adress(next, next->m_right->m_data);
+            current->m_data = tmp_val;
         }
     }
 }
