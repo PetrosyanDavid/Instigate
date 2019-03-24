@@ -13,6 +13,8 @@ int main()
     a.print();
     std::cout << a.find(144) << std::endl;
     std::cout << a.find(123) << std::endl;
-    a.remove(235345);
+    //a.remove(235345);
     a.print();
+    std::cout << a.get_height() << std::endl;
+    a.print_traverse();
 }

@@ -226,3 +226,44 @@ void tree<T>::remove_adress(node<T>* adress, const T& val)
         }
     }
 }
+
+template <class T>
+int tree<T>::get_height ()
+{
+    int height = 0;
+    return get_height_helper (m_root, height);
+}
+
+template <class T>
+int tree<T>::get_height_helper (node<T>* adress, int height)
+{
+    if (adress == nullptr) {
+        return height;
+    } else {
+        height = std::max (get_height_helper (adress->m_left, height + 1),
+                get_height_helper(adress->m_right, height + 1));
+        return height;
+    }
+}
+
+template <class T>
+void tree<T>::print_traverse ()
+{
+    if (m_root == nullptr) {
+        return;
+    }
+    queue<node<T>*> q;
+    node<T> * current = nullptr;
+    q.queue_in (m_root);
+    do {
+        current = q.queue_out();
+        std::cout << current->m_data << " " << std::flush;
+        if (current->m_left != nullptr) {
+            q.queue_in(current->m_left);
+        }
+        if (current->m_right != nullptr) {
+            q.queue_in(current->m_right);
+        }
+    } while (!q.is_empty());
+    std::cout << std::endl;
+}

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cassert>
+#include "queue.hpp"
 
 template <class T>
 struct node
@@ -28,6 +29,7 @@ class tree
         void destroy(node<T>*);
         node<T>* find_adress_helper (node<T>*,const T&, char&);
         void remove_adress (node<T>*, const T&);
+        int get_height_helper (node<T>*, int);
     public:
         tree ();
         ~tree();
@@ -35,6 +37,8 @@ class tree
         bool find (const T&);
         void print ();
         void remove (const T&);
+        int get_height ();
+        void print_traverse ();
 };
 
 #include "binary_search_tree_include.cpp"
