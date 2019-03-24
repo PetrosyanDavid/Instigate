@@ -1,0 +1,1 @@
+obj/generate.dep obj/generate.o: src/generate.cpp inc/generate.h

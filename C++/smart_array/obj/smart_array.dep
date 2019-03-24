@@ -1,0 +1,2 @@
+obj/smart_array.dep obj/smart_array.o: src/smart_array.cpp \
+ inc/smart_array.hpp

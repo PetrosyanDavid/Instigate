@@ -94,8 +94,7 @@ void smart_array::pop ()
 
 void smart_array::psh_back (int val)
 {
-    int a = m_size + 1;
-    resize(a, val);
+    resize(m_size + 1, val);
 }
 
 void smart_array::insert (int pos, int val)

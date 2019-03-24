@@ -65,7 +65,7 @@ vector<T>& vector<T>::operator=(const vector& a)
 
 
 template <typename T>
-void vector<T>::push_back (T a)
+void vector<T>::push_back (const T& a)
 {
     if (m_size == m_cap) {
         resize();
@@ -93,8 +93,9 @@ vector<T>::~vector ()
 template <typename T>
 T vector<T>::pop ()
 {
+    T val = m_arr[m_size -1];
     --m_size;
-    return m_arr[m_size-1];
+    return val;
 }
 
 template <typename T>
@@ -178,4 +179,17 @@ void vector<T>::resize ()
     m_arr = nullptr;
     m_arr = tmp_ptr;
     std::cout << "resize called" << std::endl;
+}
+
+
+template <class T>
+void stack<T>::stack_push (const T& val)
+{
+   this->push_back(val);
+}
+
+template <class T>
+T stack<T>::stack_pop ()
+{
+    return this->pop();
 }

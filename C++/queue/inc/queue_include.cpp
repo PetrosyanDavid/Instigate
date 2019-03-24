@@ -1,4 +1,22 @@
 template <class T>
+node<T>::node ():
+    m_node(nullptr)
+{}
+
+template <class T>
+node<T>::node (T data):
+    m_data(data),
+    m_node(nullptr)
+{}
+
+template <class T>
+node<T>::node (T data, node* adress):
+    m_data(data),
+    m_node(adress)
+{}
+
+
+template <class T>
 list<T>::list() :
     first (nullptr),
     len(0)
@@ -202,3 +220,14 @@ void list<T>::reverse()
     first = tmp_ptr_2;
 }
 
+template <class T>
+void queue<T>::queue_in (const T& val)
+{
+    this->push_back (val);
+}
+
+template <class T>
+T queue<T>::queue_out ()
+{
+    return this->pop_front();
+}

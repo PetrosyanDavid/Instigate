@@ -1,0 +1,1 @@
+obj/battleship.dep obj/battleship.o: src/battleship.cpp inc/generate.h

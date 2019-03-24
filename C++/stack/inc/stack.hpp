@@ -24,13 +24,20 @@ class vector
         void erase (int);
         T& operator[] (const int&);
         bool operator== (const vector&);
-        void push_back (T );
+        void push_back (const T&);
         void print ();
         void swap (int, int);
         ~vector();
         friend std::ostream& operator<< <T> (std::ostream&, const vector<T>&);
 };
 
+template <class T>
+class stack : public vector<T>
+{
+    public:
+        void stack_push (const T&);
+        T stack_pop ();
+};
 
-#include "vector.cpp"
+#include "stack_include.cpp"
 #endif

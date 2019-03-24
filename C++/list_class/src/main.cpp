@@ -29,4 +29,6 @@ int main()
     a.print();
     a.reverse();
     a.print();
+    std::cout << a.pop_front() << std::endl;
+    a.print();
 }

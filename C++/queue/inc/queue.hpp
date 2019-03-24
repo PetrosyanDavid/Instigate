@@ -15,23 +15,6 @@ struct node
 };
 
 template <class T>
-node<T>::node ():
-    m_node(nullptr)
-{}
-
-template <class T>
-node<T>::node (T data):
-    m_data(data),
-    m_node(nullptr)
-{}
-
-template <class T>
-node<T>::node (T data, node* adress):
-    m_data(data),
-    m_node(adress)
-{}
-
-template <class T>
 class list
 {
     private:
@@ -55,6 +38,13 @@ class list
 
 };
 
-#include "list_include.cpp"
-
+template <class T>
+class queue : public list<T>
+{
+    public:
+        T queue_out ();
+void queue_in (const T&);
+        //void print();
+};
+#include "queue_include.cpp"
 #endif
