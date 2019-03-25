@@ -132,16 +132,15 @@ bool tree<T>::find_helper (node<T>* adress,const T& val)
 }
 
 template <class T>
-node<T>* tree<T>::find_adress_helper (node<T>* adress, const T& val, char& side)
+node<T>* tree<T>::find_adress_helper (node<T>* adress, const T& val)
 {
     assert (val != adress->m_data);
     if (val < adress->m_data) {
         if (adress->m_left != nullptr) {
             if(adress->m_left->m_data == val) {
-                side = 'l';
                 return adress;
             } else {
-                return find_adress_helper(adress->m_left, val, side);
+                return find_adress_helper(adress->m_left, val);
             }
         } else {
             return nullptr;
@@ -149,10 +148,9 @@ node<T>* tree<T>::find_adress_helper (node<T>* adress, const T& val, char& side)
     } else {
         if (adress->m_right != nullptr) {
             if (adress->m_right->m_data == val) {
-                side = 'r';
                 return adress;
             } else {
-                return find_adress_helper(adress->m_right, val, side);
+                return find_adress_helper(adress->m_right, val);
             }
         } else {
             return nullptr;
@@ -179,56 +177,74 @@ template <class T>
 void tree<T>::remove_adress(node<T>* adress, const T& val)
 {
     node<T>* rem_ptr = nullptr;
-    char side = ' ';
     node<T>* current = nullptr;
     assert (adress->m_data != val);
-    rem_ptr = find_adress_helper(adress, val, side);
+    rem_ptr = find_adress_helper(adress, val);
     if  (rem_ptr == nullptr) {
         return;
     }
-    if ('r' == side) {
+    if (val == rem_ptr->m_right->m_data) {
         current = rem_ptr->m_right;
-    } else if ('l' == side) {
+    } else if (val == rem_ptr->m_left->m_data) {
         current = rem_ptr->m_left;
     }
-    // tbd cleanup  - l/r, delete the certain left/right of the parent
     if (current->m_left == nullptr && current->m_right == nullptr) {
+        remove_zero(rem_ptr, current);
+    } else if (current->m_left == nullptr || current->m_right == nullptr) {
+        remove_one (rem_ptr, current);
+    } else {
+        remove_two(current);
+    }
+}
+
+template <class T>
+void tree<T>::remove_zero(node<T>* parent, node<T>* current) {
+    if (current == parent->m_right){
+        parent->m_right = nullptr;
+    } else if (current == parent->m_left) {
+        parent->m_left = nullptr;
+    }
+    delete current;
+    current = nullptr;
+}
+
+template <class T>
+void tree<T>::remove_one (node<T>* parent, node<T>* current)
+{
+    if (current->m_left == nullptr) {
+        if (current == parent->m_right){
+            parent->m_right = current->m_right;
+        } else if (current == parent->m_left) {
+            parent->m_left = current->m_right;
+        }
         delete current;
         current = nullptr;
-        if ('r' == side){
-            rem_ptr->m_right = nullptr;
-        } else if ('l' == side) {
-            rem_ptr->m_left = nullptr;
-        }
-        // maybe better to move the node itself
-    } else if (current->m_left == nullptr) {
-        node<T>* tmp_r = current->m_right;
-        current->m_data = tmp_r->m_data;
-        current->m_right = tmp_r->m_right;
-        current->m_left = tmp_r->m_left;
-        delete tmp_r;
     } else if (current->m_right == nullptr) {
-        node<T>* tmp_l = current->m_left;
-        current->m_data = tmp_l->m_data;
-        current->m_right = tmp_l->m_right;
-        current->m_left = tmp_l->m_left;
-        delete tmp_l;
-    } else {
-        // find righmost of the left subtree
-        ///
-        node<T>* next = current->m_left;
-        if (next->m_right == nullptr) {
-            T tmp_val = next->m_data;
-            remove_adress(current, next->m_data);
-            current->m_data = tmp_val;
-        } else {
-            while (next->m_right->m_right != nullptr) {
-                next = next->m_right;
-            }
-            T tmp_val = next->m_right->m_data;
-            remove_adress(next, next->m_right->m_data);
-            current->m_data = tmp_val;
+        if (current == parent->m_right){
+            parent->m_right = current->m_left;
+        } else if (current == parent->m_left) {
+            parent->m_left = current->m_left;
         }
+        delete current;
+        current = nullptr;
+    }
+}
+
+template <class T>
+void tree<T>::remove_two (node<T>* current)
+{
+    node<T>* next = current->m_left;
+    if (next->m_right == nullptr) {
+        T tmp_val = next->m_data;
+        remove_adress(current, next->m_data);
+        current->m_data = tmp_val;
+    } else {
+        while (next->m_right->m_right != nullptr) {
+            next = next->m_right;
+        }
+        T tmp_val = next->m_right->m_data;
+        remove_adress(next, next->m_right->m_data);
+        current->m_data = tmp_val;
     }
 }
 

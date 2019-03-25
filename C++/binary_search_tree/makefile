@@ -35,7 +35,7 @@ inc/%tpp : src/%tpp ./inc
 ./inc :
 	mkdir -p inc
 
-./bin:
+./bin :
 	mkdir -p bin
 
 .PHONY clean: 

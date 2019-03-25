@@ -27,9 +27,12 @@ class tree
         void print_helper (node<T>* adress);
         bool find_helper (node<T>*,const T&);
         void destroy(node<T>*);
-        node<T>* find_adress_helper (node<T>*,const T&, char&);
+        node<T>* find_adress_helper (node<T>*,const T&);
         void remove_adress (node<T>*, const T&);
         int get_height_helper (node<T>*, int);
+        void remove_zero (node<T>*, node<T>*);
+        void remove_one (node<T>*, node<T>*);
+        void remove_two (node<T>*);
     public:
         tree ();
         ~tree();
