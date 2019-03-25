@@ -41,5 +41,5 @@ class tree
         void print_traverse ();
 };
 
-#include "binary_search_tree_include.cpp"
+#include "binary_search_tree_include.tpp"
 #endif
