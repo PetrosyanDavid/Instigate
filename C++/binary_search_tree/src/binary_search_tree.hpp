@@ -35,9 +35,10 @@ class tree
         ~tree();
         void insert (const T&);
         bool find (const T&);
-        void print ();
         void remove (const T&);
         int get_height ();
+        //comment
+        void print ();
         void print_traverse ();
 };
 

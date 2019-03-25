@@ -116,6 +116,7 @@ bool tree<T>::find_helper (node<T>* adress,const T& val)
     if (val == adress->m_data) {
         return true;
     } else if (val < adress->m_data) {
+        //if (NULL != adress->m_left) {
         if (adress->m_left) {
             return find_helper(adress->m_left, val);
         } else {
@@ -190,6 +191,7 @@ void tree<T>::remove_adress(node<T>* adress, const T& val)
     } else if ('l' == side) {
         current = rem_ptr->m_left;
     }
+    // tbd cleanup  - l/r, delete the certain left/right of the parent
     if (current->m_left == nullptr && current->m_right == nullptr) {
         delete current;
         current = nullptr;
@@ -198,6 +200,7 @@ void tree<T>::remove_adress(node<T>* adress, const T& val)
         } else if ('l' == side) {
             rem_ptr->m_left = nullptr;
         }
+        // maybe better to move the node itself
     } else if (current->m_left == nullptr) {
         node<T>* tmp_r = current->m_right;
         current->m_data = tmp_r->m_data;
@@ -211,6 +214,8 @@ void tree<T>::remove_adress(node<T>* adress, const T& val)
         current->m_left = tmp_l->m_left;
         delete tmp_l;
     } else {
+        // find righmost of the left subtree
+        ///
         node<T>* next = current->m_left;
         if (next->m_right == nullptr) {
             T tmp_val = next->m_data;
