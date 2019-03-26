@@ -23,20 +23,23 @@ obj/%.dep : src/%.cpp
 obj/%.o :
 	$(CC) $(CFLAGS) -I$(INC) $< -o $@ 
 
-bin/battleship : $(OBJECTS) ./bin $(INCLUDE_H) $(INCLUDE_T)
+bin/battleship : $(OBJECTS) ./bin #$(INCLUDE_H) $(INCLUDE_T)
 	$(CC) $(OBJECTS) -o $@
 
-inc/%hpp : src/%hpp ./inc
-	ln $< $@
-
-inc/%tpp : src/%tpp ./inc
-	ln $< $@
 
 ./inc :
 	mkdir -p inc
 
 ./bin :
 	mkdir -p bin
+	$(MAKE) $(INCLUDE_H) 
+	$(MAKE) $(INCLUDE_T) 
+
+inc/%hpp : src/%hpp ./inc
+	ln $< $@
+
+inc/%tpp : src/%tpp ./inc
+	ln $< $@
 
 .PHONY clean: 
 	rm -rf ./obj  ./bin ./inc
