@@ -1,5 +1,5 @@
-#ifndef LIST_HPP
-#define LIST_HPP
+#ifndef QUEUE_HPP
+#define QUEUE_HPP
 #include <iostream>
 #include <cassert>
 
@@ -46,5 +46,5 @@ class queue : public list<T>
 void queue_in (const T&);
         //void print();
 };
-#include "queue_include.cpp"
+#include "queue_include.tpp"
 #endif

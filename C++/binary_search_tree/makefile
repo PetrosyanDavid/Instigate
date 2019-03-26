@@ -1,4 +1,4 @@
-all:  bin/battleship
+all:  bin/tree
 
 CC := g++
 SOURCES := $(wildcard src/*cpp)
@@ -23,7 +23,7 @@ obj/%.dep : src/%.cpp
 obj/%.o :
 	$(CC) $(CFLAGS) -I$(INC) $< -o $@ 
 
-bin/battleship : $(OBJECTS) ./bin #$(INCLUDE_H) $(INCLUDE_T)
+bin/tree : $(OBJECTS) ./bin #$(INCLUDE_H) $(INCLUDE_T)
 	$(CC) $(OBJECTS) -o $@
 
 
