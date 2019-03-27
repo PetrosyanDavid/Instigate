@@ -39,5 +39,5 @@ class stack : public vector<T>
         T stack_pop ();
 };
 
-#include "stack_include.cpp"
+#include "stack_include.tpp"
 #endif

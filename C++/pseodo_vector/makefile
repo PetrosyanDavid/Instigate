@@ -2,33 +2,48 @@ all:  bin/vector
 
 CC := g++
 SOURCES := $(wildcard src/*cpp)
+INCLUDEH := $(wildcard src/*hpp) 
+INCLUDET := $(wildcard src/*tpp)
+INCLUDE_H = $(patsubst src/%.hpp, inc/%.hpp, $(INCLUDEH))
+INCLUDE_T = $(patsubst src/%.tpp, inc/%.tpp, $(INCLUDET))
 OBJECTS := $(patsubst src/%.cpp, obj/%.o, $(SOURCES))
-INC := -I./inc
+INC := ./inc
 DEPENDS := $(patsubst src/%.cpp,obj/%.dep,$(SOURCES))
 CFLAGS := -c -g -Wall -Wextra -pedantic -std=c++11
-
 ifeq ($(MAKECMDGOALS),)
-	-include $(DEPENDS)
+	    -include $(DEPENDS)
 else ifeq ($(MAKECMDGOALS),all)
-	-include $(DEPENDS)
+	    -include $(DEPENDS)
 endif
-
 
 obj/%.dep : src/%.cpp
 	mkdir -p obj
-	$(CC) $(INC) -MM $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
+	$(CC) -I$(INC) -MM $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
 
 obj/%.o :
-	$(CC) $(CFLAGS) $(INC) $< -o $@ 
+	$(CC) $(CFLAGS) -I$(INC) $< -o $@ 
 
-bin/vector : $(OBJECTS) ./bin
+bin/vector : $(OBJECTS) ./bin #$(INCLUDE_H) $(INCLUDE_T)
 	$(CC) $(OBJECTS) -o $@
 
-./bin:
+
+./inc :
+	mkdir -p inc
+
+./bin :
 	mkdir -p bin
+	$(MAKE) $(INCLUDE_H) 
+	$(MAKE) $(INCLUDE_T) 
+
+inc/%hpp : src/%hpp ./inc
+	ln $< $@
+
+inc/%tpp : src/%tpp ./inc
+	ln $< $@
 
 .PHONY clean: 
-	rm -rf ./obj  ./bin
+	rm -rf ./obj  ./bin ./inc
+
 
 
 

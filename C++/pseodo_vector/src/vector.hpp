@@ -32,5 +32,5 @@ class vector
 };
 
 
-#include "vector.cpp"
+#include "vector.tpp"
 #endif
