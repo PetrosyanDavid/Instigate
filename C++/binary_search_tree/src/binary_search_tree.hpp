@@ -23,25 +23,41 @@ class tree
 {
     private:
         node<T>* m_root;
-        void insert_helper (node<T>*, const T&);
+        // places  data val under appropriate node somewhere under
+        // adress node
+        void insert_helper (node<T>* adress, const T& val);
         void print_helper (node<T>* adress);
-        bool find_helper (node<T>*,const T&);
-        void destroy(node<T>*);
-        node<T>* find_adress_helper (node<T>*,const T&);
-        void remove_adress (node<T>*, const T&);
+        // finds if node with value val exists in nodes under atress
+        bool find_helper (node<T>* adress,const T& val);
+        // deletes all nodes under adress including itself
+        void destroy(node<T>* adress);
+        // looks for node with data val in nodes under adress and
+        // returns pointer to its parent node
+        node<T>* find_adress_helper (node<T>* adress, const T& val);
+        // searches fro node with data val somewhere under adress node
+        // and deletes it
+        void remove_adress (node<T>* adress, const T& val);
         int get_height_helper (node<T>*, int);
-        void remove_zero (node<T>*, node<T>*);
-        void remove_one (node<T>*, node<T>*);
-        void remove_two (node<T>*);
+        // remove node with 0 children at current
+        void remove_zero (node<T>* patent, node<T>* current);
+        // remove node with 1 hild at current
+        void remove_one (node<T>* parent, node<T>* current);
+        // remove node with 2 childern at current
+        void remove_two (node<T>* current);
+
     public:
         tree ();
         ~tree();
-        void insert (const T&);
-        bool find (const T&);
-        void remove (const T&);
+        // create node with data val in appropriate place in tree 
+        void insert (const T& val);
+        // find if node with data val exists in tree
+        bool find (const T& val);
+        // delete node with data val from treee if it exists
+        void remove (const T& val);
         int get_height ();
-        //comment
+        // print tree inorder
         void print ();
+        // print tree line by line
         void print_traverse ();
 };
 

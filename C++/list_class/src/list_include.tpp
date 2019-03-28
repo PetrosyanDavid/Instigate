@@ -1,4 +1,21 @@
 template <class T>
+node<T>::node ():
+    m_node(nullptr)
+{}
+
+template <class T>
+node<T>::node (T data):
+    m_data(data),
+    m_node(nullptr)
+{}
+
+template <class T>
+node<T>::node (T data, node* adress):
+    m_data(data),
+    m_node(adress)
+{}
+
+template <class T>
 list<T>::list() :
     first (nullptr),
     len(0)
