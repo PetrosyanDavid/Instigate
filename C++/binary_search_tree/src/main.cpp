@@ -8,13 +8,14 @@ int main()
     a.insert(123);
     a.insert(235345);
     a.insert(986);
+    a.insert(2);
     a.insert(1);
     a.insert(77);
     a.print();
     std::cout << a.find(144) << std::endl;
     std::cout << a.find(123) << std::endl;
     a.print_traverse();
-    a.remove(235345);
+    a.remove(1);
     a.print();
     std::cout << a.get_height() << std::endl;
     a.print_traverse();

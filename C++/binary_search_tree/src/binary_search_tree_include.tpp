@@ -183,9 +183,9 @@ void tree<T>::remove_adress(node<T>* adress, const T& val)
     if  (rem_ptr == nullptr) {
         return;
     }
-    if (val == rem_ptr->m_right->m_data) {
+    if (rem_ptr->m_right != nullptr && val == rem_ptr->m_right->m_data) {
         current = rem_ptr->m_right;
-    } else if (val == rem_ptr->m_left->m_data) {
+    } else if (rem_ptr->m_left != nullptr && val == rem_ptr->m_left->m_data) {
         current = rem_ptr->m_left;
     }
     if (current->m_left == nullptr && current->m_right == nullptr) {
