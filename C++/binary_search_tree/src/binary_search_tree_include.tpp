@@ -55,6 +55,27 @@ void tree<T>::insert (const T& data)
 }
 
 template <class T>
+tree<T>::tree (const tree& a){
+    if (nullptr == a.m_root) {
+        m_root = nullptr;
+    } else {
+        copy_helper (m_root, a.m_root);
+    }
+}
+
+template <class T>
+void tree<T>::copy_helper (node<T>*& copy_adress, node<T>* src_adress)
+{
+    copy_adress = new node<T>((*src_adress).get_data());
+    if (nullptr != (*src_adress).get_left()) {
+        copy_helper ((*copy_adress).get_left(), (*src_adress).get_left());
+    }
+    if (nullptr != (*src_adress).get_right()) {
+        copy_helper ((*copy_adress).get_right(), (*src_adress).get_right());
+    }
+}
+
+template <class T>
 void tree<T>::insert_helper (node<T>* adress, const T& data)
 {
     if (data < (*adress).get_data()) {

@@ -19,4 +19,6 @@ int main()
     a.print();
     std::cout << a.get_height() << std::endl;
     a.print_traverse();
+    tree<int> b(a);
+    b.print();
 }

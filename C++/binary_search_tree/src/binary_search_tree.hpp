@@ -37,6 +37,9 @@ class tree
         node<T>* m_root;
 
     private:
+        // copies from tree starting from src_adress into tree starting from copy_adress
+        void copy_helper (node<T>*& copy_adress, node<T>* src_adress);
+
         // places  data val under appropriate node below adress node
         void insert_helper (node<T>* adress, const T& val);
 
@@ -68,7 +71,9 @@ class tree
     public:
         //Constructors
         tree ();
+        tree (const tree&);
         ~tree();
+
 
         // create node with data val in appropriate place in tree
         void insert (const T& val);
@@ -79,6 +84,7 @@ class tree
         // delete node with data val from treee if it exists
         void remove (const T& val);
 
+        //return tree height
         int get_height ();
 
         // print tree inorder
