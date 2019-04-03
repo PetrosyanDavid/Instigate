@@ -19,6 +19,24 @@ node<T>:: node (T data, node<T>* left, node<T>* right):
     m_right(right)
 {}
 
+template <class T>
+T& node<T>::get_data ()
+{
+    return m_data;
+}
+
+template <class T>
+node<T>*& node<T>::get_left ()
+{
+    return m_left;
+}
+
+template <class T>
+node<T>*& node<T>::get_right ()
+{
+    return m_right;
+}
+
 ///////////////////////////////////Tree Class///////////////////////////////////
 
 template <class T>
@@ -29,7 +47,6 @@ tree<T>::tree ():
 template <class T>
 void tree<T>::insert (const T& data)
 {
-    //node<T> * tmp_ptr = m_root;
     if (m_root == nullptr) {
         m_root = new node<T>(data);
     } else {
@@ -40,17 +57,17 @@ void tree<T>::insert (const T& data)
 template <class T>
 void tree<T>::insert_helper (node<T>* adress, const T& data)
 {
-    if (data < adress->m_data) {
-        if (adress->m_left == nullptr) {
-            adress->m_left = new node<T>(data);
+    if (data < (*adress).get_data()) {
+        if (nullptr == (*adress).get_left()) {
+            (*adress).get_left() = new node<T>(data);
         } else {
-            insert_helper(adress->m_left, data);
+            insert_helper((*adress).get_left(), data);
         }
     } else {
-        if (adress->m_right == nullptr) {
-            adress->m_right = new node<T>(data);
+        if (nullptr == adress->m_right) {
+            (*adress).get_right() = new node<T>(data);
         } else {
-            insert_helper(adress->m_right, data);
+            insert_helper((*adress).get_right(), data);
         }
     }
 }
