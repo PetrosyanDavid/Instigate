@@ -1,4 +1,4 @@
-all:  ../../bin/thread
+all:  ../../lib/libget_num.so
 
 CC        := g++
 SOURCES   := $(wildcard ./*cpp)
@@ -10,7 +10,7 @@ OBJECTS   := $(patsubst ./%.cpp, ../../obj/%.o, $(SOURCES))
 INC       := ../../inc
 DEPENDS   := $(patsubst ./%.cpp,../../obj/%.dep,$(SOURCES))
 CFLAGS    := -c -g -Wall -Wextra -pedantic -std=c++11
-
+LFLAGS    := -c -Wall -Werror -fPIC -Wextra -std=c++11
 
 ifeq ($(MAKECMDGOALS),)
 	    -include $(DEPENDS)
@@ -18,14 +18,17 @@ else ifeq ($(MAKECMDGOALS),all)
 	    -include $(DEPENDS)
 endif
 
+default :
+	@echo $(DEPENDS)
+
 ../../obj/%.dep : ./%.cpp 
-	$(CC) -I$(INC) -MM $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
+	$(CC) -I$(INC) -MM  $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
 
 $(OBJECTS) :
-	$(CC) $(CFLAGS) -I$(INC) $< -o $@ 
+	$(CC) $(LFLAGS) -I$(INC) $< -o $@ 
 
-../../bin/thread : $(OBJECTS) $(INCLUDE_H) $(INCLUDE_T)
-	$(CC) -pthread $(OBJECTS) -o $@
+../../lib/libget_num.so : $(INCLUDE_H) $(INCLUDE_T) $(OBJECTS) 
+	$(CC) -shared  $(OBJECTS) -o $@
 
 #./inc :
 #	mkdir -p inc
