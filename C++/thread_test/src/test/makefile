@@ -19,12 +19,12 @@ else ifeq ($(MAKECMDGOALS),all)
 endif
 
 ../../obj/%.dep : ./%.cpp 
-	$(CC) -I$(INC) -MM $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
+	$(CC) -I$(INC) -std=c++11 -MM $< -MT "$@ $(patsubst %.dep,%.o,$@)" -o $@
 
 $(OBJECTS) :
 	$(CC) $(CFLAGS) -I$(INC) $< -o $@ 
 
-../../bin/thread : $(OBJECTS) $(INCLUDE_H) $(INCLUDE_T)
+../../bin/thread : $(INCLUDE_H) $(INCLUDE_T) $(OBJECTS) 
 	$(CC) -pthread $(OBJECTS) -o $@
 
 #./inc :
