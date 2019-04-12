@@ -17,15 +17,15 @@ enum protocol {TCP,UDP};
 
 class sockets::socket
 {
-    private:
+    public:
         int m_socket;
     public:
         socket();
         socket(protocol);
-        ~socket();
         int bind (int);
         int listen (int);
         int connect (int);
+        int close();
 };
 
 #endif

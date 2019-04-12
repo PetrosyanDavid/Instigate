@@ -41,3 +41,9 @@ int sockets::socket::connect (int port)
     int connection = ::connect(m_socket, (struct sockaddr*)& sa, sizeof(sa));
     return connection;
 }
+
+int sockets::socket::close ()
+{
+    int r = ::close(m_socket);
+    return r;
+}
