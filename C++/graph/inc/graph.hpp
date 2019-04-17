@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
+#include <iterator>
+#include <cstring>
+
 
 template <class T>
 struct edge
@@ -26,9 +30,11 @@ template <class T>
 class graph
 {
     public:
+        std::set<std::string> cities;
         std::vector<edge<T>> m_links;
         void add_link (edge<T> );
         double get_path (T start, T dest);
+        double get_indirect_path (T start, T dest);
 };
 
 

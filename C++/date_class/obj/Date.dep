@@ -1,0 +1,1 @@
+obj/Date.dep obj/Date.o: src/Date.cpp inc/Date.hpp

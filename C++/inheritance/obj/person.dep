@@ -1,0 +1,1 @@
+obj/person.dep obj/person.o: src/person.cpp inc/person.hpp

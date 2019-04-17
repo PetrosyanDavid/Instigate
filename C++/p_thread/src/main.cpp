@@ -39,7 +39,6 @@ void generate (std::vector<std::vector<int>>& v, int size)
         for (int j = 0; j < size; ++j) {
             v[i][j] = rand()%10;
         }
-        std::cout << std::endl;
     }
 }
 

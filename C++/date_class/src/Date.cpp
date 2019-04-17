@@ -2,8 +2,8 @@
 
 Date::Date()
 {
-    day = 1;
-    month = 1;
+    day = 2;
+    month = 2;
     year = 1990;
     std::cout << "Default constructor called" << std::endl;
 }
@@ -97,7 +97,7 @@ void Date::display_date(int f)
 }
 
 
-void Date::compare_date (Date d)
+void Date::compare_date (Date& d)
 {
     if (year < d.year || (year == d.year && month < d.month)) {
         std::cout << "We are in the past" << std::endl;

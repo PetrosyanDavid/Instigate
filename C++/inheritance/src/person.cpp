@@ -69,7 +69,7 @@ student::~student ()
 {
     std::cout << "Deconstructor for student called" << std::endl;
 }
-
+/*
 void student::get_info ()
 {
     std::cout << "get_info for student  called" << std::endl;
@@ -80,3 +80,4 @@ void student::get_info ()
         << m_thesis_name << "\nNr. of courses = " << m_courses
         << "\nAverage GPA" << m_gpa << std::endl;
 }
+*/

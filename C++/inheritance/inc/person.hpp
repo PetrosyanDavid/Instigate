@@ -14,7 +14,7 @@ class person
         person ();
         person (int, std::string, std::string, int, int);
         void set_person_info (int, std::string, std::string, int, int);
-        virtual ~person();
+        ~person();
         virtual void get_info () = 0;
 };
 
@@ -29,7 +29,7 @@ class student : public person
         student ();
         student (int, std::string, std::string, int, int);
         ~student ();
-        void get_info ();
+        //void get_info ();
 };
 
 #endif
