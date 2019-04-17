@@ -1,11 +1,20 @@
 #include "window.hpp"
-#include <QPushButton>
+#include <QCoreApplication>
 
 window::window (QWidget *parent) :
-    QWidget(parent)
+    QMainWindow(parent)
 {
-    setFixedSize(400, 200);
+    m_button = new QPushButton("My Button", this);
+    m_button->setGeometry(QRect(QPoint(100, 100),QSize(200,50)));
 
-    m_button = new QPushButton("Hello", this);
-    m_button->setGeometry(10, 10, 80, 30);
+    connect(m_button, SIGNAL (released()), this, SLOT(handleButton()));
 }
+
+void window::handleButton()
+{
+    m_button->setText("Example");
+    m_button->resize(100, 100);
+}
+
+//window::~window ()
+//{}
