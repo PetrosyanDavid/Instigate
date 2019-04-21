@@ -1,0 +1,2 @@
+../../obj/main.dep ../../obj/main.o: main.cpp matrix.hpp \
+ ../../inc/thread.hpp ../../inc/mutex.hpp

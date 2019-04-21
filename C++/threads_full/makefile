@@ -10,4 +10,4 @@ all : ./src
 clean:
 	rm -rf ./obj  ./bin ./inc ./lib
 
-.PHONY : ./src clean
+.PHONY : ./src clean exp

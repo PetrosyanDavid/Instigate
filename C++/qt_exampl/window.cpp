@@ -10,6 +10,15 @@ window::window (QWidget *parent) :
     connect(m_button, SIGNAL (released()), this, SLOT(handleButton()));
 }
 
+void window::key_press_event (QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Q) {
+        m_button->setText("You Pressed Tab");
+    } else {
+        m_button->setText("You pressed something else");
+    }
+}
+
 void window::handleButton()
 {
     m_button->setText("Example");
